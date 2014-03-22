@@ -1,13 +1,13 @@
 package team16.project;
 
 public class Main {
-
-	/**
-	 * @param args
-	 */
 	public static void main(String[] args) {
-		System.out.println("HEYYY");
-
+	     
+        Model      model      = new Model();
+        View       view       = new View(model);
+        new Controller(model, view);
+        
+        view.setVisible(true);
 	}
 
 }
