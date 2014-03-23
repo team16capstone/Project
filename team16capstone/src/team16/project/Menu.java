@@ -1,7 +1,6 @@
 package team16.project;
 
 import java.awt.event.ActionListener;
-
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -20,7 +19,6 @@ public class Menu extends JMenuBar {
 	private JMenuItem exportMOV = new JMenuItem("Export To MOV");
 	private JMenuItem exit = new JMenuItem("Exit");
 
-
 	
     public Menu() {
     	exportMovie.add(exportAVI);
@@ -34,9 +32,27 @@ public class Menu extends JMenuBar {
     	file.add(exit);
     	this.add(file);
     	
+    	file.setMnemonic('F');
+    	nNew.setMnemonic('N');
+    	saveProject.setMnemonic('S');
+    	openProject.setMnemonic('O');
+    	exportMovie.setMnemonic('E');
+    	exportAVI.setMnemonic('A');
+    	exportMPEG.setMnemonic('M');
+    	exportMP4.setMnemonic('P');
+    	exportMOV.setMnemonic('V');
+    	exit.setMnemonic('X');
+
     }
 
     void addItemListener(ActionListener t) {
     	nNew.addActionListener(t);
+    	saveProject.addActionListener(t);
+    	openProject.addActionListener(t);
+    	exportAVI.addActionListener(t);
+    	exportMPEG.addActionListener(t);
+    	exportMP4.addActionListener(t);
+    	exportMOV.addActionListener(t);
+    	exit.addActionListener(t);
     }
 }

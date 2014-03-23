@@ -2,13 +2,8 @@ package team16.project;
 import java.awt.event.*;
 
 public class Controller {
-    private Model mainModel;
-    private View  mainView;
 
-    Controller(Model model, View view) {
-        mainModel = model;
-        mainView  = view;
-        
+	Controller(Model model, View view) {
         view.addButtonListener(new ButtonListener());
         view.addMenuListener(new MenuListener());
     }
@@ -25,10 +20,38 @@ public class Controller {
     class MenuListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             try {
-                if(e.getActionCommand().matches("New"))
-                	{
+                if (e.getActionCommand().matches("New"))
+                {
                 	System.out.println("YOU CLICKED NEW");
-                	}
+                }
+                else if (e.getActionCommand().matches("Save Project"))
+                {
+                	
+                }
+                else if (e.getActionCommand().matches("Open Project"))
+                {
+                	
+                }
+                else if (e.getActionCommand().matches("Export To AVI"))
+                {
+                	
+                }
+                else if (e.getActionCommand().matches("Export To MPEG"))
+                {
+                	
+                }
+                else if (e.getActionCommand().matches("Export To MP4"))
+                {
+                	
+                }
+                else if (e.getActionCommand().matches("Export To MOV"))
+                {
+                	
+                }
+                else if (e.getActionCommand().matches("Exit"))
+                {
+                	System.exit(0);
+                }
             } catch (NumberFormatException nfex) {
             }
         }
