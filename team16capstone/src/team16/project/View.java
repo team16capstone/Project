@@ -14,7 +14,7 @@ public class View extends JFrame {
     private BorderLayout bLayout = new BorderLayout();
     
     View(Model model) {
-        this.setExtendedState(this.getExtendedState() | JFrame.MAXIMIZED_BOTH);
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         JPanel content = new JPanel();
         content.setLayout(bLayout);
         content.add(clearButton);
