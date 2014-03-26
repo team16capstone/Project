@@ -8,14 +8,19 @@ public class View extends JFrame {
     
     private JButton clearButton = new JButton("Clear");
     private Menu menu = new Menu();
+    private FileToolbar fileToolbar = new FileToolbar();
+    private EditToolbar editToolbar = new EditToolbar();
 
+    private BorderLayout bLayout = new BorderLayout();
+    
     View(Model model) {
         this.setExtendedState(this.getExtendedState() | JFrame.MAXIMIZED_BOTH);
         JPanel content = new JPanel();
-        content.setLayout(new FlowLayout());
+        content.setLayout(bLayout);
         content.add(clearButton);
         setJMenuBar(menu);
-        
+        bLayout.addLayoutComponent(fileToolbar, BorderLayout.WEST);
+        bLayout.addLayoutComponent(editToolbar, BorderLayout.NORTH);
         this.setContentPane(content);
         this.pack();
         
