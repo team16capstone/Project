@@ -10,16 +10,18 @@ public class View extends JFrame {
     private Menu menu = new Menu();
     private FileToolbar fileToolbar = new FileToolbar();
     private EditToolbar editToolbar = new EditToolbar();
+    private drawingSpace drawingSpace = new drawingSpace();
 
     private BorderLayout bLayout = new BorderLayout();
     
     View(Model model) {
         JPanel content = new JPanel();
-        JButton button = new JButton("button");
+        //JButton button = new JButton("button");
 
         content.setLayout(bLayout);
         setJMenuBar(menu);
-        content.add(button);
+        content.add(drawingSpace, BorderLayout.CENTER);
+        drawingSpace.setSize(super.getWidth(), super.getHeight());
         content.add(fileToolbar, BorderLayout.NORTH);
         content.add(editToolbar, BorderLayout.WEST);
         fileToolbar.setSize(fileToolbar.getWidth(), super.getHeight());

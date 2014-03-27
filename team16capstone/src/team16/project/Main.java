@@ -11,7 +11,7 @@ public class Main {
         View       view       = new View(model);
         new Controller(model, view);
         
-		/**Dimensions of current screen to ensure consistent Icon ratio*/
+        /**Dimensions of current screen to ensure consistent Icon ratio*/
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		Double width = screenSize.getWidth();
 		Double height = screenSize.getHeight();
