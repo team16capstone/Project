@@ -8,6 +8,7 @@ import javax.swing.JMenuItem;
 public class Menu extends JMenuBar {
 	private static final long serialVersionUID = 1L;
 
+	/**File Menu Components*/
 	private JMenu file = new JMenu("File");
 	private JMenuItem nNew = new JMenuItem("New");
 	private JMenuItem saveProject = new JMenuItem("Save Project");
@@ -19,8 +20,22 @@ public class Menu extends JMenuBar {
 	private JMenuItem exportMOV = new JMenuItem("Export To MOV");
 	private JMenuItem exit = new JMenuItem("Exit");
 
+	/**Insert Menu Components*/
+	private JMenu insert = new JMenu("Insert");
+	private JMenuItem circle = new JMenuItem("Circle");
+	private JMenuItem cross = new JMenuItem("Cross");
+	private JMenuItem square = new JMenuItem("Square");
+	private JMenuItem star = new JMenuItem("Star");
+	private JMenuItem wave = new JMenuItem("Wave");
+
+	/**Effects Menu Components*/
+	private JMenu effects = new JMenu("Effects");
+	private JMenuItem motionPath = new JMenuItem("Motion Path");
+	private JMenuItem rotation = new JMenuItem("Rotation");
+
 	
     public Menu() {
+    	/**Add File Menu*/
     	exportMovie.add(exportAVI);
     	exportMovie.add(exportMPEG);
     	exportMovie.add(exportMP4);
@@ -32,6 +47,20 @@ public class Menu extends JMenuBar {
     	file.add(exit);
     	this.add(file);
     	
+    	/**Add Insert Menu*/
+    	insert.add(circle);
+    	insert.add(cross);
+    	insert.add(square);
+    	insert.add(star);
+    	insert.add(wave);
+    	this.add(insert);
+    	
+    	/**Add Effects Menu*/
+    	effects.add(motionPath);
+    	effects.add(rotation);
+    	this.add(effects);
+    	
+    	/**Add File Menu Shortcuts*/
     	file.setMnemonic('F');
     	nNew.setMnemonic('N');
     	saveProject.setMnemonic('S');
@@ -42,6 +71,20 @@ public class Menu extends JMenuBar {
     	exportMP4.setMnemonic('P');
     	exportMOV.setMnemonic('V');
     	exit.setMnemonic('X');
+
+    	/**Add Insert Menu Shortcuts*/
+    	insert.setMnemonic('I');
+    	circle.setMnemonic('C');
+    	cross.setMnemonic('R');
+    	square.setMnemonic('Q');
+    	star.setMnemonic('S');
+    	wave.setMnemonic('W');
+    	
+    	/**Add Effects Menu Shortcuts*/
+    	effects.setMnemonic('E');
+    	motionPath.setMnemonic('M');
+    	rotation.setMnemonic('R');
+
 
     }
 

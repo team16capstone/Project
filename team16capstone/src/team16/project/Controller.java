@@ -4,7 +4,6 @@ import java.awt.event.*;
 public class Controller {
 
 	Controller(Model model, View view) {
-        view.addButtonListener(new ButtonListener());
         view.addMenuListener(new MenuListener());
     }
     
