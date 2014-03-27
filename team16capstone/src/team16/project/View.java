@@ -1,5 +1,6 @@
 package team16.project;
 import java.awt.*;
+
 import javax.swing.*;
 
 import java.awt.event.*;
@@ -13,7 +14,6 @@ public class View extends JFrame {
     private BorderLayout bLayout = new BorderLayout();
     
     View(Model model) {
-        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         JPanel content = new JPanel();
         JButton button = new JButton("button");
 
