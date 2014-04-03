@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -40,10 +41,15 @@ public class EditToolbar extends JPanel{
 		
 		/**add all the buttons to the toolbar*/
 		bar.add(circle);
+		circle.setActionCommand("circle");
 		bar.add(cross);
+		cross.setActionCommand("cross");
 		bar.add(square);
+		square.setActionCommand("square");
 		bar.add(star);
+		star.setActionCommand("star");
 		bar.add(wave);
+		wave.setActionCommand("wave");
 		bar.addSeparator();
 		
 
@@ -73,5 +79,13 @@ public class EditToolbar extends JPanel{
 		    wave.setIcon(waveIcon);
 		} catch (IOException ex) {
 		  }
+	}
+	
+	public void addListeners(ActionListener a){
+		circle.addActionListener(a);
+		cross.addActionListener(a);
+		square.addActionListener(a);
+		star.addActionListener(a);
+		wave.addActionListener(a);
 	}
 }

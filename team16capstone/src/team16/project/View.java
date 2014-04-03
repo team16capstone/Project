@@ -1,6 +1,7 @@
 package team16.project;
 import java.awt.*;
 
+import javax.media.opengl.GLEventListener;
 import javax.swing.*;
 
 import java.awt.event.*;
@@ -10,26 +11,26 @@ public class View extends JFrame {
     private Menu menu = new Menu();
     private FileToolbar fileToolbar = new FileToolbar();
     private EditToolbar editToolbar = new EditToolbar();
-    private drawingSpace drawingSpace = new drawingSpace();
 
     private BorderLayout bLayout = new BorderLayout();
-    
+    private DrawingSpace drawingSpace;
+
     View(Model model) {
         JPanel content = new JPanel();
         //JButton button = new JButton("button");
-
         content.setLayout(bLayout);
         setJMenuBar(menu);
-        content.add(drawingSpace, BorderLayout.CENTER);
-        drawingSpace.setSize(super.getWidth(), super.getHeight());
         content.add(fileToolbar, BorderLayout.NORTH);
         content.add(editToolbar, BorderLayout.WEST);
-        fileToolbar.setSize(fileToolbar.getWidth(), super.getHeight());
-
         this.setContentPane(content);
         this.pack();
         
-   
+        int w = (Toolkit.getDefaultToolkit().getScreenSize().width) - (Toolkit.getDefaultToolkit().getScreenSize().width*4/100);
+        int h = (Toolkit.getDefaultToolkit().getScreenSize().height) - (Toolkit.getDefaultToolkit().getScreenSize().height*18/100);
+        drawingSpace = new DrawingSpace(w,h);
+
+        content.add(drawingSpace);
+
         this.setTitle("Team 16 Motion Movie Maker");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
@@ -48,6 +49,15 @@ public class View extends JFrame {
    
     void addMenuListener(ActionListener t) {
     	menu.addItemListener(t);
+    }
+    
+    void addToolbarListener(ActionListener t) {
+    	fileToolbar.addListeners(t);
+    	editToolbar.addListeners(t);
+    }
+    
+    void addGraphicListener(GLEventListener t) {
+    	drawingSpace.addGraphicListener(t);
     }
 
 }

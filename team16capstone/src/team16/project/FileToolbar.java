@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -26,6 +27,7 @@ public class FileToolbar extends JPanel{
 	
 	private FlowLayout fileLayout = new FlowLayout();
 	
+
 	public FileToolbar()
 	{
 		fileLayout.setAlignment(FlowLayout.LEFT);
@@ -44,14 +46,20 @@ public class FileToolbar extends JPanel{
 
 		/**add all the buttons to the toolbar*/
 		bar.add(nNew);
+		nNew.setActionCommand("new");
 		bar.add(open);
+		open.setActionCommand("open");
 		bar.add(save);
+		save.setActionCommand("save");
 		bar.add(exportAVI);
+		exportAVI.setActionCommand("exportAVI");
 		bar.add(exportMPEG);
+		exportMPEG.setActionCommand("exportMPEG");
 		bar.add(exportMP4);
+		exportMP4.setActionCommand("exportMP4");
 		bar.add(exportMOV);
-		
-		
+		exportMOV.setActionCommand("exportMOV");
+
 		/**add toolbar to the panel*/
 		add(bar);
 		bar.setAlignmentX(0);
@@ -96,5 +104,14 @@ public class FileToolbar extends JPanel{
 		  }
 		
 		
+	}
+	public void addListeners(ActionListener a){
+		nNew.addActionListener(a);
+		open.addActionListener(a);
+		save.addActionListener(a);
+		exportAVI.addActionListener(a);
+		exportMPEG.addActionListener(a);
+		exportMP4.addActionListener(a);
+		exportMOV.addActionListener(a);
 	}
 }
