@@ -1,24 +1,26 @@
 package team16.project;
-import java.awt.event.*;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
-import javax.media.opengl.GL;
-import javax.media.opengl.GL2;
-import javax.media.opengl.GLAutoDrawable;
-import javax.media.opengl.GLEventListener;
-import javax.media.opengl.glu.GLU;
+import team16.project.shapes.*;
 
 public class Controller {
 	
 	int object = 0;
 	int xpoints[];
 	int ypoints[];
+
 	
 	Controller(Model model, View view) {
-        view.addMenuListener(new MenuListener());
-        view.addGraphicListener(new GraphicListener());
+		MenuListener ml = new MenuListener(view);
+		ToolbarListener tl = new ToolbarListener(view);
+        view.addMenuListener(ml);
         view.addMouseListener(null);
-        view.addToolbarListener(new ToolbarListener());
-    }
+        view.addToolbarListener(tl);
+	}
     
     class ButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
@@ -28,17 +30,81 @@ public class Controller {
             }
         }
     }
+    
 
     class ToolbarListener implements ActionListener {
-        public void actionPerformed(ActionEvent e) {
+        View view;
+    	public ToolbarListener(View view) {
+    		this.view = view;
+        }
+
+		public void actionPerformed(ActionEvent e) {
             try {
             	if (e.getActionCommand().matches("new"))
                 {
-                	System.out.println("YOU CLICKED NEW BUTTON");
+                	view.getGlistener().reset();
+                }
+            	if (e.getActionCommand().matches("open"))
+                {
+                	
+                }
+            	if (e.getActionCommand().matches("save"))
+                {
+                	
+                }
+            	if (e.getActionCommand().matches("exportAVI"))
+                {
+                	
+                }
+            	if (e.getActionCommand().matches("exportMPEG"))
+                {
+                	
+                }
+            	if (e.getActionCommand().matches("exportMP4"))
+                {
+                	
+                }
+            	if (e.getActionCommand().matches("exportMOV"))
+                {
+                	
                 }
             	if (e.getActionCommand().matches("square"))
                 {
-                	System.out.println("YOU CLICKED NEW SQUARE");
+                	view.ml.setActive(true);
+                	view.ml.setType("square");
+                }
+            	if (e.getActionCommand().matches("circle"))
+                {
+                	view.ml.setActive(true);
+                	view.ml.setType("circle");
+                	}
+            	if (e.getActionCommand().matches("star"))
+                {
+                	view.getGlistener().addShape(new Star());
+                }
+            	if (e.getActionCommand().matches("cross"))
+                {
+                	view.getGlistener().addShape(new Cross());
+                }
+            	if (e.getActionCommand().matches("wave"))
+                {
+                	view.getGlistener().addShape(new Wave());
+                }
+            	if (e.getActionCommand().matches("rotate"))
+                {
+                	
+                }
+            	if (e.getActionCommand().matches("motionpath"))
+                {
+                	
+                }
+            	if (e.getActionCommand().matches("animate"))
+                {
+                	
+                }
+            	if (e.getActionCommand().matches("color"))
+                {
+
                 }
             } catch (NumberFormatException nfex) {
             }
@@ -46,11 +112,16 @@ public class Controller {
     }
     
     class MenuListener implements ActionListener {
+        View view;
+
+    	public MenuListener(View view) {
+    		this.view = view;
+		}
         public void actionPerformed(ActionEvent e) {
             try {
                 if (e.getActionCommand().matches("New"))
                 {
-                	System.out.println("YOU CLICKED NEW");
+                	view.getGlistener().reset();
                 }
                 else if (e.getActionCommand().matches("Save Project"))
                 {
@@ -80,104 +151,30 @@ public class Controller {
                 {
                 	System.exit(0);
                 }
+                else if (e.getActionCommand().matches("Square"))
+                {
+                	view.ml.setActive(true);
+                	view.ml.setType("square");
+                }
+                else if (e.getActionCommand().matches("Circle"))
+                {
+                	view.ml.setActive(true);
+                	view.ml.setType("circle");
+                	}
+                else if (e.getActionCommand().matches("Star"))
+                {
+                	view.getGlistener().addShape(new Star());
+                }
+                else if (e.getActionCommand().matches("Cross"))
+                {
+                	view.getGlistener().addShape(new Cross());
+                }
+                else if (e.getActionCommand().matches("Wave"))
+                {
+                	view.getGlistener().addShape(new Wave());
+                }
             } catch (NumberFormatException nfex) {
             }
         }
-    }
-    
-    class GraphicListener implements GLEventListener{
-		@Override
-		public void dispose(GLAutoDrawable arg0) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void init(GLAutoDrawable drawable) {
-
-		}
-
-		@Override
-		public void reshape(GLAutoDrawable glautodrawable, int x, int y, int width,
-				int height) {
-            this.setup( glautodrawable.getGL().getGL2(), width, height );
-		}
-		
-		private void setup(GL2 gl2, int width, int height) {
-        	gl2.glMatrixMode( GL2.GL_PROJECTION );
-            gl2.glLoadIdentity();
-
-            // coordinate system origin at lower left with width and height same as the window
-            GLU glu = new GLU();
-            glu.gluOrtho2D( 0.0f, width, 0.0f, height );
-
-            gl2.glMatrixMode( GL2.GL_MODELVIEW );
-            gl2.glLoadIdentity();
-
-            gl2.glViewport( 0, 0, width, height );
-		}
-    	
-	  	
-		@Override
-		public void display(GLAutoDrawable glautodrawable) {
-			this.render( glautodrawable.getGL().getGL2(), glautodrawable.getWidth(), glautodrawable.getHeight() );
-		}
-			
-		void render(GL2 gl2, int width, int height) {
-			gl2.glClear( GL.GL_COLOR_BUFFER_BIT );
-
-	        // draw a triangle filling the window
-	        gl2.glLoadIdentity();
-	        gl2.glBegin( GL2.GL_TRIANGLES );
-	        gl2.glColor3f( 1, 0, 0 );
-	        gl2.glVertex2f( 0, 0 );
-	        gl2.glColor3f( 1, 0, 0 );
-	        gl2.glVertex2f( width, 0 );
-	        gl2.glColor3f( 1, 0, 0 );
-	        gl2.glVertex2f( width / 2, height );
-	        gl2.glEnd();
-	        
-	        //draw a square
-//			gl2.glClear( GL.GL_COLOR_BUFFER_BIT );
-
-	        gl2.glLoadIdentity();
-	        gl2.glBegin( GL2.GL_POLYGON);
-	        gl2.glColor3f( 0, 1, 0 );
-	        gl2.glVertex2f( 0, 0 );
-	        gl2.glColor3f( 0, 1, 0 );
-	        gl2.glVertex2f( 100, 0 );
-	        gl2.glColor3f( 0, 1, 0 );
-	        gl2.glVertex2f( 100, 100 );
-	        gl2.glColor3f( 0, 1, 0 );
-	        gl2.glVertex2f( 0, 100 );
-	        gl2.glColor3f( 0, 1, 0 );
-	        gl2.glVertex2f( 0, 0 );
-	        gl2.glColor3f( 0, 1, 0 );
-	        gl2.glEnd();
-	        
-	        gl2.glLoadIdentity();
-	        gl2.glBegin( GL2.GL_POLYGON );
-	        gl2.glColor3f( 0, 0, 1 );
-	        gl2.glVertex3f( 200, 100, 0 );
-	        gl2.glColor3f( 0, 0, 1 );
-	        gl2.glVertex3f( 300, 0, 0 );
-	        gl2.glColor3f( 0, 0, 1 );
-	        gl2.glVertex3f( 100, 0, 0 );
-	        gl2.glColor3f( 0, 0, 1 );
-	        
-	        gl2.glColor3f( 0, 0, 1 );
-	        gl2.glVertex3f( 200, 100, 100 );
-	        gl2.glColor3f( 0, 0, 1 );
-	        gl2.glVertex3f( 300, 0, 100 );
-	        gl2.glColor3f( 0, 0, 1 );
-	        gl2.glVertex3f( 100, 0, 100 );
-	        gl2.glColor3f( 0, 0, 1 );
-	        
-	        
-	        
-	        
-	        
-	        gl2.glEnd();
-		}
     }
 }

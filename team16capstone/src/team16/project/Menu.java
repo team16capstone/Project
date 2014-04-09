@@ -97,5 +97,14 @@ public class Menu extends JMenuBar {
     	exportMP4.addActionListener(t);
     	exportMOV.addActionListener(t);
     	exit.addActionListener(t);
+    	circle.addActionListener(t);
+    	cross.addActionListener(t);
+    	square.addActionListener(t);
+    	star.addActionListener(t);
+    	wave.addActionListener(t);
+    	effects.addActionListener(t);
+    	motionPath.addActionListener(t);
+    	rotation.addActionListener(t);
+
     }
 }

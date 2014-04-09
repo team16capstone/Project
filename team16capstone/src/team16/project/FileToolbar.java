@@ -9,6 +9,8 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JColorChooser;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
 
@@ -25,9 +27,14 @@ public class FileToolbar extends JPanel{
 	private JButton exportMP4 = new JButton();
 	private JButton exportMOV = new JButton();
 	
+	/**All components of Effects*/
+	private JCheckBox rotate = new JCheckBox("Rotate");
+	private JCheckBox motionPath = new JCheckBox("Motion Path");
+	private JButton animate = new JButton("Animate");
 	private FlowLayout fileLayout = new FlowLayout();
 	
-
+	private JButton color = new JButton("Choose Colour");
+	
 	public FileToolbar()
 	{
 		fileLayout.setAlignment(FlowLayout.LEFT);
@@ -59,6 +66,20 @@ public class FileToolbar extends JPanel{
 		exportMP4.setActionCommand("exportMP4");
 		bar.add(exportMOV);
 		exportMOV.setActionCommand("exportMOV");
+		
+		bar.addSeparator();
+		
+		bar.add(rotate);
+		rotate.setActionCommand("rotate");
+		bar.add(motionPath);
+		motionPath.setActionCommand("motionPath");
+		bar.add(animate);
+		animate.setActionCommand("animate");
+		
+		bar.addSeparator();
+
+		bar.add(color);
+		color.setActionCommand("color");
 
 		/**add toolbar to the panel*/
 		add(bar);
@@ -95,11 +116,6 @@ public class FileToolbar extends JPanel{
 		    ImageIcon movIcon = new ImageIcon(tmpMOV.getScaledInstance(h, h, Image.SCALE_AREA_AVERAGING));
 		    exportMOV.setIcon(movIcon);
 		    
-		    
-
-
-		    
-		    
 		  } catch (IOException ex) {
 		  }
 		
@@ -113,5 +129,10 @@ public class FileToolbar extends JPanel{
 		exportMPEG.addActionListener(a);
 		exportMP4.addActionListener(a);
 		exportMOV.addActionListener(a);
+		rotate.addActionListener(a);
+		motionPath.addActionListener(a);
+		animate.addActionListener(a);
+		color.addActionListener(a);
+
 	}
 }
