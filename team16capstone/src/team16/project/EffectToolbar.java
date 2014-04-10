@@ -33,7 +33,7 @@ public class EffectToolbar extends JPanel{
 		Double height = screenSize.getHeight();
 		width = width/30;
 		height = height/30;
-		int h = height.intValue();
+		height.intValue();
 		
 		/**Set the toolbar horizontal*/
 		bar.setOrientation(0);

@@ -2,11 +2,9 @@ package team16.project;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseListener;
 
 import javax.media.opengl.GLCapabilities;
 import javax.media.opengl.GLProfile;
-import javax.media.opengl.awt.GLCanvas;
 import javax.media.opengl.awt.GLJPanel;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;

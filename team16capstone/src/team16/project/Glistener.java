@@ -1,7 +1,5 @@
 package team16.project;
 
-import java.awt.Toolkit;
-
 import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 import javax.media.opengl.GLAutoDrawable;
@@ -9,17 +7,14 @@ import javax.media.opengl.GLEventListener;
 import javax.media.opengl.awt.GLJPanel;
 import javax.media.opengl.glu.GLU;
 
-import team16.project.animation.Animation;
-import team16.project.shapes.*;
+import team16.project.shapes.Circle;
+import team16.project.shapes.Cross;
+import team16.project.shapes.Shape;
+import team16.project.shapes.Square;
 
 public class Glistener implements GLEventListener{
-
-    private double theta = 0;
-    private double s = 0;
-    private double c = 0;
     
     private Shape shapes[] = new Shape[100];
-    private Animation anim[] = new Animation[1000];
     GLJPanel canvas;
 	public Glistener(GLJPanel canvas) {
 		this.canvas = canvas;
@@ -32,81 +27,26 @@ public class Glistener implements GLEventListener{
 	    }
 
     private void render(GLAutoDrawable drawable) {
-        GL2 gl = drawable.getGL().getGL2();
+        GL2 gl2 = drawable.getGL().getGL2();
+    	gl2.glClear(GL.GL_COLOR_BUFFER_BIT);
 
-        gl.glClear(GL.GL_COLOR_BUFFER_BIT);
      
         for(int i = 0; shapes[i] != null; i++)
         {
             if(shapes[i].getType().equals("square")){
-            	drawSquare(gl,(Square)shapes[i]);
+            	((Square)shapes[i]).drawSquare(gl2);
             }
             if(shapes[i].getType().equals("circle")){
-            	drawCircle(gl,(Circle)shapes[i]);
+            	((Circle)shapes[i]).drawCircle(gl2);
             }
-            if(shapes[i].getType().equals("wave"))
+            if(shapes[i].getType().equals("cross"))
             {
-            	drawWave(gl,(Wave)shapes[i]);
+            	((Cross)shapes[i]).drawCross(gl2);
             }
         }
     }
-    private void drawSquare(GL2 gl, Square sq)
-    {
-    	gl.glBegin(GL2.GL_POLYGON);
-        for(int j = 0; j < 5; j++)
-        {
-        	gl.glColor3f(0, 0, 1);
-        	gl.glVertex2d(((Square)(sq)).getVertex(0, j),((Square)(sq)).getVertex(1, j));
-        }
-        gl.glEnd();
-    }
-    
-    private void drawCircle(GL2 gl, Circle sq)
-    {
-
-        gl.glColor3f(1, 1, 0);
-
-    	float theta = (float) (2 * 3.1415926 / (100)); 
-    	float tangetial_factor = (float) (Math.tan(theta));//calculate the tangential factor 
-    	float radial_factor = (float) (Math.cos(theta));//calculate the radial factor 
-    	float x = 50;//we start at angle = 0 
-    	float y = 0; 
-    	gl.glLineWidth(5f);
-    	gl.glBegin(GL2.GL_LINE_LOOP); 
-    	for(int ii = 0; ii < 100; ii++) 
-    	{ 
-    		gl.glVertex2f(x + sq.getX(), y + sq.getY());//output vertex 
-
-    		float tx = -y; 
-    		float ty = x; 
-
-    		x += tx * tangetial_factor; 
-    		y += ty * tangetial_factor; 
-
-    		x *= radial_factor; 
-    		y *= radial_factor; 
-    	} 
-    	gl.glEnd();
-    }
-    
-    private void drawWave(GL2 gl, Wave sq)
-    {
-
-        // draw a triangle filling the window
-        gl.glBegin(GL2.GL_POLYGON);
-        gl.glColor3f(1, 0, 0);
-        gl.glVertex2d(-s, -c);
-        gl.glColor3f(0, 1, 0);
-        gl.glVertex2d(s, c);
-        gl.glColor3f(0, 0, 1);
-        gl.glVertex2d(s, -c);
-        gl.glEnd();
-    }
-    
+      
     private void update() {
-        theta += 0.01;
-        s = Math.sin(theta)*canvas.getSize().width;
-        c = Math.cos(theta)*canvas.getSize().height;
         for(int i = 0; shapes[i] != null; i++)
         {
             if(shapes[i].getType().equals("square")){
@@ -154,7 +94,7 @@ public class Glistener implements GLEventListener{
         gl2.glViewport( 0, 0, width, height );
 	}
 	
-	public void addShape(Shape shape){
+	public void addShape(int x, int y, int height, String type, int thickness, int[] rGB){
 		
 		int a = 0;
 		for(int i = 0;shapes[i]!=null;i++)
@@ -162,7 +102,14 @@ public class Glistener implements GLEventListener{
 			a = i+1;
 		}
 		System.out.println("Adding shape to " + a);
-		shapes[a] = shape;
+		if(type.equals("square"))
+			shapes[a] = new Square(x,y,height,thickness,rGB);
+		else if(type.equals("circle"))
+			shapes[a] = new Circle(x,y,height,thickness,rGB);
+		else if(type.equals("cross"))
+			shapes[a] = new Cross(x,y,height,thickness,rGB);
+//		if(type.equals("square"))
+//		shapes[a] = new Square(x,y,height,type);
 	}
 	
 	public void reset()

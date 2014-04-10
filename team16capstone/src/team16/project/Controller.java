@@ -1,20 +1,20 @@
 package team16.project;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
-import team16.project.shapes.*;
+import javax.swing.JColorChooser;
+import javax.swing.JOptionPane;
 
 public class Controller {
 	
 	int object = 0;
 	int xpoints[];
 	int ypoints[];
-
+	View view;
+	JColorChooser colorChooser=new JColorChooser();
 	
 	Controller(Model model, View view) {
+		this.view = view;
 		MenuListener ml = new MenuListener(view);
 		ToolbarListener tl = new ToolbarListener(view);
         view.addMenuListener(ml);
@@ -70,25 +70,23 @@ public class Controller {
                 }
             	if (e.getActionCommand().matches("square"))
                 {
-                	view.ml.setActive(true);
-                	view.ml.setType("square");
+            		doProcessing("square");
                 }
             	if (e.getActionCommand().matches("circle"))
                 {
-                	view.ml.setActive(true);
-                	view.ml.setType("circle");
-                	}
+            		doProcessing("circle");
+                }
             	if (e.getActionCommand().matches("star"))
                 {
-                	view.getGlistener().addShape(new Star());
+            		doProcessing("star");
                 }
             	if (e.getActionCommand().matches("cross"))
                 {
-                	view.getGlistener().addShape(new Cross());
+            		doProcessing("cross");
                 }
             	if (e.getActionCommand().matches("wave"))
                 {
-                	view.getGlistener().addShape(new Wave());
+            		doProcessing("wave");
                 }
             	if (e.getActionCommand().matches("rotate"))
                 {
@@ -153,28 +151,44 @@ public class Controller {
                 }
                 else if (e.getActionCommand().matches("Square"))
                 {
-                	view.ml.setActive(true);
-                	view.ml.setType("square");
+            		doProcessing("square");
                 }
                 else if (e.getActionCommand().matches("Circle"))
                 {
-                	view.ml.setActive(true);
-                	view.ml.setType("circle");
-                	}
+            		doProcessing("circle");
+                }
                 else if (e.getActionCommand().matches("Star"))
                 {
-                	view.getGlistener().addShape(new Star());
+            		doProcessing("star");
                 }
                 else if (e.getActionCommand().matches("Cross"))
                 {
-                	view.getGlistener().addShape(new Cross());
+            		doProcessing("cross");
                 }
                 else if (e.getActionCommand().matches("Wave"))
                 {
-                	view.getGlistener().addShape(new Wave());
+            		doProcessing("wave");
                 }
             } catch (NumberFormatException nfex) {
             }
         }
+    }
+    
+    public void doProcessing(String shape){
+    	JOptionPane.showMessageDialog(null,colorChooser);
+    	System.out.println(colorChooser.getColor());
+    	int tmpThick = Integer.parseInt(JOptionPane.showInputDialog("Please enter a size value from 1 to 100 (Recomended 10)"));
+    	while(tmpThick > 100 || tmpThick < 1)
+    		tmpThick = Integer.parseInt(JOptionPane.showInputDialog("INPUT NOT VALID! Please enter a size value from 1 to 100 (Recomended 10)"));
+    	if(tmpThick < 1 || tmpThick > 100)
+    		return;
+    	else
+    	{
+        	view.ml.setActive(true);
+        	view.ml.setType(shape);
+        	view.ml.setThickness(tmpThick);
+        	int[] tmpRGB = {colorChooser.getColor().getRed(),colorChooser.getColor().getGreen(),colorChooser.getColor().getBlue()};
+        	view.ml.setRGB(tmpRGB);
+    	}
     }
 }

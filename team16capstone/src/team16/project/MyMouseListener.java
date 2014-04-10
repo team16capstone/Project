@@ -1,24 +1,25 @@
 package team16.project;
 
+import java.awt.FlowLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.media.opengl.awt.GLJPanel;
-
-import team16.project.shapes.Circle;
-import team16.project.shapes.Square;
+import javax.swing.JOptionPane;
 
 public class MyMouseListener implements MouseListener{
 	View view;
 	GLJPanel canvas;
 	String type;
 	boolean active;
-	
+	int thickness;
+	int[] RGB = new int[3];
 	public MyMouseListener(View view, GLJPanel canvas) {
 		this.view = view;
 		this.canvas = canvas;
 		type = "";
 		active = false;
+		thickness = 1;
 		view.addMouseListener(this);
 	}
 
@@ -27,11 +28,10 @@ public class MyMouseListener implements MouseListener{
 		if(active){
 			active = false;
 			int x = arg0.getPoint().x;
-			int y = arg0.getPoint().y;	
-				if(type.equals("square"))                	
-				view.getGlistener().addShape(new Square(x,y,canvas.getSize().height));
-				if(type.equals("circle"))                	
-				view.getGlistener().addShape(new Circle(x,y,canvas.getSize().height));
+			int y = arg0.getPoint().y;
+			JOptionPane options = new JOptionPane(x);
+			options.setLayout(new FlowLayout());
+			view.getGlistener().addShape(x,y,canvas.getSize().height,type,thickness,RGB);
 		}
 
 	}
@@ -66,6 +66,13 @@ public class MyMouseListener implements MouseListener{
 	
 	public void setType(String type){
 		this.type = type;
+	}
+	
+	public void setThickness(int thickness){
+		this.thickness = thickness;
+	}
+	public void setRGB(int[] RGB){
+		this.RGB = RGB;
 	}
 	
 }
