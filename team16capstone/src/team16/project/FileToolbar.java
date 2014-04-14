@@ -128,10 +128,12 @@ public class FileToolbar extends JPanel{
 		exportMPEG.addActionListener(a);
 		exportMP4.addActionListener(a);
 		exportMOV.addActionListener(a);
-		rotate.addActionListener(a);
 		motionPath.addActionListener(a);
 		animate.addActionListener(a);
 		color.addActionListener(a);
-
+	}
+	
+	public boolean getRotate(){
+		return rotate.isSelected();
 	}
 }

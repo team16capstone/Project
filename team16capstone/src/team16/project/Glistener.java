@@ -13,7 +13,7 @@ import team16.project.shapes.Shape;
 import team16.project.shapes.Square;
 
 public class Glistener implements GLEventListener{
-    
+    float angle = 0;
     private Shape shapes[] = new Shape[100];
     GLJPanel canvas;
 	public Glistener(GLJPanel canvas) {
@@ -22,31 +22,54 @@ public class Glistener implements GLEventListener{
 
 	@Override
 	public void display(GLAutoDrawable glautodrawable) {
-	    this.update();
+//	    this.update();
 	    this.render(glautodrawable);
 	    }
 
     private void render(GLAutoDrawable drawable) {
         GL2 gl2 = drawable.getGL().getGL2();
-    	gl2.glClear(GL.GL_COLOR_BUFFER_BIT);
+    	gl2.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
+
 
      
         for(int i = 0; shapes[i] != null; i++)
         {
+        	angle += 1;
+        	gl2.glLoadIdentity();
             if(shapes[i].getType().equals("square")){
+            	if(((Square)shapes[i]).getRotate())
+            	{
+            		gl2.glTranslatef(((Square)shapes[i]).getX(), ((Square)shapes[i]).getY(), 0);
+            		gl2.glRotatef(angle, 0, 0, 1);
+            		gl2.glTranslatef(-((Square)shapes[i]).getX(), -((Square)shapes[i]).getY(), 0);
+            	}
+
             	((Square)shapes[i]).drawSquare(gl2);
             }
             if(shapes[i].getType().equals("circle")){
+            	if(((Circle)shapes[i]).getRotate())
+            	{
+            		gl2.glTranslatef(((Circle)shapes[i]).getX(), ((Circle)shapes[i]).getY(), 0);
+            		gl2.glRotatef(angle, 0, 1, 0);
+            		gl2.glTranslatef(-((Circle)shapes[i]).getX(), -((Circle)shapes[i]).getY(), 0);
+            	}
             	((Circle)shapes[i]).drawCircle(gl2);
             }
             if(shapes[i].getType().equals("cross"))
             {
+            	if(((Cross)shapes[i]).getRotate())
+            	{
+            		gl2.glTranslatef(((Cross)shapes[i]).getX(), ((Cross)shapes[i]).getY(), 0);
+            		gl2.glRotatef(angle, 0, 0, 1);
+            		gl2.glTranslatef(-((Cross)shapes[i]).getX(), -((Cross)shapes[i]).getY(), 0);
+            	}
             	((Cross)shapes[i]).drawCross(gl2);
             }
         }
     }
       
-    private void update() {
+    @SuppressWarnings("unused")
+	private void update() {
         for(int i = 0; shapes[i] != null; i++)
         {
             if(shapes[i].getType().equals("square")){
@@ -89,12 +112,11 @@ public class Glistener implements GLEventListener{
         glu.gluOrtho2D( 0.0f, width, 0.0f, height );
 
         gl2.glMatrixMode( GL2.GL_MODELVIEW );
-        gl2.glLoadIdentity();
 
         gl2.glViewport( 0, 0, width, height );
 	}
 	
-	public void addShape(int x, int y, int height, String type, int thickness, int[] rGB){
+	public void addShape(int x, int y, int height, String type, int size, int[] rGB, boolean filled, int thickness, boolean rotate){
 		
 		int a = 0;
 		for(int i = 0;shapes[i]!=null;i++)
@@ -103,13 +125,12 @@ public class Glistener implements GLEventListener{
 		}
 		System.out.println("Adding shape to " + a);
 		if(type.equals("square"))
-			shapes[a] = new Square(x,y,height,thickness,rGB);
+			shapes[a] = new Square(x,y,height,size,rGB,filled,thickness,rotate);
 		else if(type.equals("circle"))
-			shapes[a] = new Circle(x,y,height,thickness,rGB);
+			shapes[a] = new Circle(x,y,height,size,rGB,filled,thickness,rotate);
 		else if(type.equals("cross"))
-			shapes[a] = new Cross(x,y,height,thickness,rGB);
-//		if(type.equals("square"))
-//		shapes[a] = new Square(x,y,height,type);
+			shapes[a] = new Cross(x,y,height,size,rGB,thickness,rotate);
+
 	}
 	
 	public void reset()

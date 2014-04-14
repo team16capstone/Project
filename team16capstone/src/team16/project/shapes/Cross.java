@@ -7,26 +7,31 @@ public class Cross extends Shape{
 	private float nsize;
 	private int xpos;
 	private int ypos;
+	private int thickness;
 	int[] rgb = new int[3];
-
-	public Cross(int x, int y, int height, int thickness, int[] rGB){
+	private boolean rotate;
+	
+	public Cross(int x, int y, int height, int size, int[] rGB, int thickness, boolean rotate){
 		setType("cross");
 		
-		nsize = (((float)thickness)/(float)200) * (float)height;
+		nsize = (((float)size)/(float)200) * (float)height;
 		xpos = x;
 		ypos = height-y;
 		rgb = rGB;
-
+		this.thickness = thickness;
+		this.rotate = rotate;
 	}
 public void drawCross(GL2 gl2){
-
+    
     gl2.glColor3f((float)rgb[0]/(float)255, (float)rgb[1]/(float)255, (float)rgb[2]/(float)255);
-//	gl2.glMatrixMode(GL2.GL_PROJECTION);
-//	gl2.glPathCoordsNV(0, 0, 0, null);
-//	gl2.glRotated(50, 0, 0, 0);	
-//	gl2.glPushMatrix();
-//    gl2.glLineWidth((float)50);
+    if(rotate)
+    {
+//    	   	gl2.glPushMatrix();
+//   		    gl2.glRotated(50, 0, 0, 0);	
+    }
+    gl2.glLineWidth((float)thickness);
 	gl2.glBegin(GL2.GL_LINE_LOOP);
+
 	gl2.glVertex2d(xpos,ypos);
 	gl2.glVertex2d(xpos,ypos-nsize);
 	gl2.glVertex2d(xpos,ypos+nsize);
@@ -35,7 +40,18 @@ public void drawCross(GL2 gl2){
 	gl2.glVertex2d(xpos+nsize,ypos);
 	gl2.glVertex2d(xpos,ypos);
 	gl2.glEnd();
-//	gl2.glPopMatrix();
+}
 
+public boolean getRotate(){
+	return rotate;
+}
+
+public int getX()
+{
+	return xpos;
+}
+public int getY()
+{
+	return ypos;
 }
 }

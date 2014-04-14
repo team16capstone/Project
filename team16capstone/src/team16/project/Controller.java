@@ -88,10 +88,6 @@ public class Controller {
                 {
             		doProcessing("wave");
                 }
-            	if (e.getActionCommand().matches("rotate"))
-                {
-                	
-                }
             	if (e.getActionCommand().matches("motionpath"))
                 {
                 	
@@ -176,19 +172,37 @@ public class Controller {
     
     public void doProcessing(String shape){
     	JOptionPane.showMessageDialog(null,colorChooser);
-    	System.out.println(colorChooser.getColor());
-    	int tmpThick = Integer.parseInt(JOptionPane.showInputDialog("Please enter a size value from 1 to 100 (Recomended 10)"));
-    	while(tmpThick > 100 || tmpThick < 1)
-    		tmpThick = Integer.parseInt(JOptionPane.showInputDialog("INPUT NOT VALID! Please enter a size value from 1 to 100 (Recomended 10)"));
-    	if(tmpThick < 1 || tmpThick > 100)
+    	int tmpSize = Integer.parseInt(JOptionPane.showInputDialog("Please enter a size value from 1 to 100 (Recomended 10)"));
+    	while(tmpSize > 100 || tmpSize < 1)
+    		tmpSize = Integer.parseInt(JOptionPane.showInputDialog("INPUT NOT VALID! Please enter a size value from 1 to 100 (Recomended 10)"));
+    	if(tmpSize < 1 || tmpSize > 100)
     		return;
     	else
     	{
         	view.ml.setActive(true);
         	view.ml.setType(shape);
-        	view.ml.setThickness(tmpThick);
+        	view.ml.setSize(tmpSize);
         	int[] tmpRGB = {colorChooser.getColor().getRed(),colorChooser.getColor().getGreen(),colorChooser.getColor().getBlue()};
         	view.ml.setRGB(tmpRGB);
+        	int tmpFilled = 1;
+        	if(!shape.equals("cross"))
+        	tmpFilled = (JOptionPane.showOptionDialog(null, "Would you like this " + shape + " to be filled?","Shape Colour Fill",JOptionPane.YES_NO_OPTION , JOptionPane.INFORMATION_MESSAGE, null, null, 1));
+        	if(tmpFilled == 0)
+        		view.ml.setFilled(true);
+        	else
+        	{
+        		view.ml.setFilled(false);
+            	int tmpThick = Integer.parseInt(JOptionPane.showInputDialog("Please enter a line thickness value from 1 to 10"));
+            	while(tmpThick > 10 || tmpThick < 1)
+            		tmpThick = Integer.parseInt(JOptionPane.showInputDialog("INPUT NOT VALID! Please enter a line thickness value from 1 to 10"));
+            	if(tmpThick < 1 || tmpThick > 10)
+            		return;
+            	else
+            	{
+            		view.ml.setThickness(tmpThick);
+            	}
+        	}
+        		
     	}
     }
 }

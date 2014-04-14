@@ -12,27 +12,33 @@ public class MyMouseListener implements MouseListener{
 	GLJPanel canvas;
 	String type;
 	boolean active;
+	boolean rotate;
+	boolean filled;
 	int thickness;
+	int size;
 	int[] RGB = new int[3];
 	public MyMouseListener(View view, GLJPanel canvas) {
 		this.view = view;
 		this.canvas = canvas;
 		type = "";
 		active = false;
-		thickness = 1;
+		rotate = false;
+		size = 1;
 		view.addMouseListener(this);
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
+		int x = arg0.getPoint().x;
+		int y = arg0.getPoint().y;		
 		if(active){
 			active = false;
-			int x = arg0.getPoint().x;
-			int y = arg0.getPoint().y;
 			JOptionPane options = new JOptionPane(x);
 			options.setLayout(new FlowLayout());
-			view.getGlistener().addShape(x,y,canvas.getSize().height,type,thickness,RGB);
+			rotate = view.getRotate();
+			view.getGlistener().addShape(x,y,canvas.getSize().height,type,size,RGB,filled,thickness,rotate);
 		}
+//		System.out.println(view.getGlistener().canvas.get);
 
 	}
 
@@ -68,11 +74,16 @@ public class MyMouseListener implements MouseListener{
 		this.type = type;
 	}
 	
-	public void setThickness(int thickness){
-		this.thickness = thickness;
+	public void setSize(int size){
+		this.size = size;
 	}
 	public void setRGB(int[] RGB){
 		this.RGB = RGB;
 	}
-	
+	public void setFilled(boolean filled){
+		this.filled = filled;
+	}
+	public void setThickness(int thickness){
+		this.thickness = thickness;
+	}
 }

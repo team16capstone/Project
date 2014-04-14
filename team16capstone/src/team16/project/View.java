@@ -85,7 +85,12 @@ public class View extends JFrame {
     public void chooseColor()
     {
     	
-    	
+    }
+    
+    public boolean getRotate()
+    {
+		return fileToolbar.getRotate();
+
     }
 }
 
