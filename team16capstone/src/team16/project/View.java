@@ -1,6 +1,7 @@
 package team16.project;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.event.ActionListener;
 
 import javax.media.opengl.GLCapabilities;
@@ -17,7 +18,8 @@ public class View extends JFrame {
     private Menu menu = new Menu();
     private FileToolbar fileToolbar = new FileToolbar();
     private EditToolbar editToolbar = new EditToolbar();
-    
+	private Color shapeColor = new Color(1.0f,1.0f,1.0f);
+
     private BorderLayout bLayout = new BorderLayout();
     int currentColor[] = new int[3];
     GLProfile glprofile = GLProfile.getDefault();
@@ -37,7 +39,6 @@ public class View extends JFrame {
         setJMenuBar(menu);
         this.getContentPane().add(fileToolbar, BorderLayout.NORTH);
         this.getContentPane().add(editToolbar, BorderLayout.WEST);
-
         
 //        int w = (Toolkit.getDefaultToolkit().getScreenSize().width) - (Toolkit.getDefaultToolkit().getScreenSize().width*4/100);
 //        int h = (Toolkit.getDefaultToolkit().getScreenSize().height) - (Toolkit.getDefaultToolkit().getScreenSize().height*18/100);
@@ -91,6 +92,15 @@ public class View extends JFrame {
     {
 		return fileToolbar.getRotate();
 
+    }
+    
+    public Color getShapeColor(){
+    	return shapeColor;
+    }
+    
+    public void setShapeColor(Color c){
+    	shapeColor = c;
+    	fileToolbar.setColor(c);
     }
 }
 

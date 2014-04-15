@@ -1,5 +1,6 @@
 package team16.project;
 
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -16,7 +17,7 @@ public class MyMouseListener implements MouseListener{
 	boolean filled;
 	int thickness;
 	int size;
-	int[] RGB = new int[3];
+	Color rgb = new Color(0.0f,0.0f,0.0f);
 	public MyMouseListener(View view, GLJPanel canvas) {
 		this.view = view;
 		this.canvas = canvas;
@@ -36,7 +37,7 @@ public class MyMouseListener implements MouseListener{
 			JOptionPane options = new JOptionPane(x);
 			options.setLayout(new FlowLayout());
 			rotate = view.getRotate();
-			view.getGlistener().addShape(x,y,canvas.getSize().height,type,size,RGB,filled,thickness,rotate);
+			view.getGlistener().addShape(x,y,canvas.getSize().height,type,size,view.getShapeColor(),filled,thickness,rotate);
 		}
 //		System.out.println(view.getGlistener().canvas.get);
 
@@ -77,9 +78,7 @@ public class MyMouseListener implements MouseListener{
 	public void setSize(int size){
 		this.size = size;
 	}
-	public void setRGB(int[] RGB){
-		this.RGB = RGB;
-	}
+
 	public void setFilled(boolean filled){
 		this.filled = filled;
 	}

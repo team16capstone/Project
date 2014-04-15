@@ -1,5 +1,6 @@
 package team16.project;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Image;
@@ -29,10 +30,10 @@ public class FileToolbar extends JPanel{
 	/**All components of Effects*/
 	private JCheckBox rotate = new JCheckBox("Rotate");
 	private JCheckBox motionPath = new JCheckBox("Motion Path");
-	private JButton animate = new JButton("Animate");
 	private FlowLayout fileLayout = new FlowLayout();
 	
 	private JButton color = new JButton("Choose Colour");
+	private JButton undo = new JButton("Undo");
 	
 	public FileToolbar()
 	{
@@ -72,14 +73,17 @@ public class FileToolbar extends JPanel{
 		rotate.setActionCommand("rotate");
 		bar.add(motionPath);
 		motionPath.setActionCommand("motionPath");
-		bar.add(animate);
-		animate.setActionCommand("animate");
 		
 		bar.addSeparator();
 
 		bar.add(color);
 		color.setActionCommand("color");
+		
+		bar.addSeparator();
 
+		bar.add(undo);
+		undo.setActionCommand("undo");
+		
 		/**add toolbar to the panel*/
 		add(bar);
 		bar.setAlignmentX(0);
@@ -129,11 +133,15 @@ public class FileToolbar extends JPanel{
 		exportMP4.addActionListener(a);
 		exportMOV.addActionListener(a);
 		motionPath.addActionListener(a);
-		animate.addActionListener(a);
 		color.addActionListener(a);
+		undo.addActionListener(a);
 	}
 	
 	public boolean getRotate(){
 		return rotate.isSelected();
+	}
+	
+	public void setColor(Color c){
+		color.setBackground(c);
 	}
 }

@@ -1,5 +1,7 @@
 package team16.project.shapes;
 
+import java.awt.Color;
+
 import javax.media.opengl.GL2;
 
 
@@ -9,25 +11,25 @@ public class Circle extends Shape{
 	private int height;
 	private int thickness;
 	private int size;
-	int[] rgb = new int[3];
+	Color rgb = new Color(0.0f,0.0f,0.0f);
 	boolean filled = true;
 	boolean rotate;
 	
-	public Circle(int x, int y, int height, int size, int[] rGB, boolean filled, int thickness2, boolean rotate){
+	public Circle(int x, int y, int height, int size, Color rGB2, boolean filled, int thickness2, boolean rotate){
 		setType("circle");
 		this.x = x;
 		this.y = height - y;
 		this.height = height;
 		this.size = size;
 		this.filled = filled;
-		rgb = rGB;
+		rgb = rGB2;
 		this.rotate = rotate;
 	}
 	
     public void drawCircle(GL2 gl2)
     {
         
-        gl2.glColor3f((float)rgb[0]/(float)255, (float)rgb[1]/(float)255, (float)rgb[2]/(float)255);
+        gl2.glColor3f((float)rgb.getRed()/(float)255, (float)rgb.getGreen()/(float)255, (float)rgb.getBlue()/(float)255);
 
     	float theta = (float) (2 * 3.1415926 / (100)); 
     	float tangetial_factor = (float) (Math.tan(theta));//calculate the tangential factor 
@@ -39,8 +41,8 @@ public class Circle extends Shape{
         	gl2.glBegin(GL2.GL_POLYGON);
         else
         {
-        	gl2.glBegin(GL2.GL_LINE_LOOP);
         	gl2.glLineWidth((float)thickness);
+        	gl2.glBegin(GL2.GL_LINE_LOOP);
         }
     	for(int ii = 0; ii < 100; ii++) 
     	{ 

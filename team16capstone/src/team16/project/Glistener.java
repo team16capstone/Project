@@ -1,5 +1,7 @@
 package team16.project;
 
+import java.awt.Color;
+
 import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 import javax.media.opengl.GLAutoDrawable;
@@ -116,7 +118,7 @@ public class Glistener implements GLEventListener{
         gl2.glViewport( 0, 0, width, height );
 	}
 	
-	public void addShape(int x, int y, int height, String type, int size, int[] rGB, boolean filled, int thickness, boolean rotate){
+	public void addShape(int x, int y, int height, String type, int size, Color rGB, boolean filled, int thickness, boolean rotate){
 		
 		int a = 0;
 		for(int i = 0;shapes[i]!=null;i++)
@@ -138,4 +140,12 @@ public class Glistener implements GLEventListener{
 		shapes = new Shape[100];
 	}
 	
+	public void undo(){
+		int a = 0;
+		for(int i = 0;shapes[i]!=null;i++)
+		{
+			a = i+1;
+		}
+		shapes[a-1] = null;
+	}
 }

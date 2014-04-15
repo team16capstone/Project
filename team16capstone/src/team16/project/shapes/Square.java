@@ -1,5 +1,7 @@
 package team16.project.shapes;
 
+import java.awt.Color;
+
 import javax.media.opengl.GL2;
 
 
@@ -7,37 +9,36 @@ public class Square extends Shape{
 	private float nsize;
 	private int xpos;
 	private int ypos;
-	int[] rgb = new int[3];
+	Color rgb = new Color(0.0f,0.0f,0.0f);
 	boolean filled;
 	boolean rotate;
 	int thickness;
-	public Square(int x, int y, int height, int size, int[] rGB, boolean filled, int thickness, boolean rotate){
+	public Square(int x, int y, int height, int size, Color rGB2, boolean filled, int thickness, boolean rotate){
 		setType("square");
 
 		nsize = (((float)size)/(float)200) * (float)height;
 		xpos = x;
 		ypos = height-y;
-		rgb = rGB;
+		rgb = rGB2;
 		this.filled = filled;
 		this.thickness = thickness;
 		this.rotate = rotate;
 	}
 public void drawSquare(GL2 gl2){
 
-    gl2.glColor3f((float)rgb[0]/(float)255, (float)rgb[1]/(float)255, (float)rgb[2]/(float)255);
+    gl2.glColor3f((float)rgb.getRed()/(float)255, (float)rgb.getGreen()/(float)255, (float)rgb.getBlue()/(float)255);
     if(rotate)
     {
     	
-//    	    gl2.glRotated(50, 0, 0, 0);	
-//    	   	gl2.glPushMatrix();
+
     }
 
     if (filled)
     	gl2.glBegin(GL2.GL_QUADS);
     else
     {
-    	gl2.glBegin(GL2.GL_LINE_LOOP);
     	gl2.glLineWidth((float)thickness);
+    	gl2.glBegin(GL2.GL_LINE_LOOP);
     }
 	gl2.glVertex2d(xpos-nsize,ypos-nsize);
 	gl2.glVertex2d(xpos+nsize,ypos-nsize);
@@ -45,8 +46,7 @@ public void drawSquare(GL2 gl2){
 	gl2.glVertex2d(xpos-nsize,ypos+nsize);
 	gl2.glVertex2d(xpos-nsize,ypos-nsize);
 	gl2.glEnd();
-//    if(rotate)
-//	gl2.glPopMatrix();
+
 
 }
 
