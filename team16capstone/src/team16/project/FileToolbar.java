@@ -34,6 +34,7 @@ public class FileToolbar extends JPanel{
 	
 	private JButton color = new JButton("Choose Colour");
 	private JButton undo = new JButton("Undo");
+	private JButton redo = new JButton("Redo");
 	
 	public FileToolbar()
 	{
@@ -83,6 +84,8 @@ public class FileToolbar extends JPanel{
 
 		bar.add(undo);
 		undo.setActionCommand("undo");
+		bar.add(redo);
+		redo.setActionCommand("redo");
 		
 		/**add toolbar to the panel*/
 		add(bar);
@@ -135,6 +138,7 @@ public class FileToolbar extends JPanel{
 		motionPath.addActionListener(a);
 		color.addActionListener(a);
 		undo.addActionListener(a);
+		redo.addActionListener(a);
 	}
 	
 	public boolean getRotate(){

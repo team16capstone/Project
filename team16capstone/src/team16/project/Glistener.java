@@ -17,6 +17,7 @@ import team16.project.shapes.Square;
 public class Glistener implements GLEventListener{
     float angle = 0;
     private Shape shapes[] = new Shape[100];
+    private Shape undoShape[] = new Shape[100];
     GLJPanel canvas;
 	public Glistener(GLJPanel canvas) {
 		this.canvas = canvas;
@@ -141,11 +142,36 @@ public class Glistener implements GLEventListener{
 	}
 	
 	public void undo(){
-		int a = 0;
+		int a = 0, b = 0;
 		for(int i = 0;shapes[i]!=null;i++)
 		{
 			a = i+1;
 		}
-		shapes[a-1] = null;
+		if (a > 0)
+		{
+			for(int i = 0;undoShape[i]!=null;i++)
+			{
+				b = i+1;
+			}
+			undoShape[b] = shapes[a-1];
+			shapes[a-1] = null;	
+		}
+	}
+	
+	public void redo(){
+		int a = 0, b = 0;
+		for(int i = 0;shapes[i]!=null;i++)
+		{
+			a = i+1;
+		}
+		if(undoShape[0]!=null)
+		{
+			for(int i = 99;undoShape[i]==null;i--)
+			{
+				b = i-1;
+			}
+				shapes[a] = undoShape[b];
+				undoShape[b] = null;
+		}
 	}
 }

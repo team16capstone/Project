@@ -44,63 +44,68 @@ public class Controller {
                 {
                 	view.getGlistener().reset();
                 }
-            	if (e.getActionCommand().matches("open"))
+            	else if (e.getActionCommand().matches("open"))
                 {
                 	
                 }
-            	if (e.getActionCommand().matches("save"))
+            	else if (e.getActionCommand().matches("save"))
                 {
                 	
                 }
-            	if (e.getActionCommand().matches("exportAVI"))
+            	else if (e.getActionCommand().matches("exportAVI"))
                 {
                 	
                 }
-            	if (e.getActionCommand().matches("exportMPEG"))
+            	else if (e.getActionCommand().matches("exportMPEG"))
                 {
                 	
                 }
-            	if (e.getActionCommand().matches("exportMP4"))
+            	else if (e.getActionCommand().matches("exportMP4"))
                 {
                 	
                 }
-            	if (e.getActionCommand().matches("exportMOV"))
+            	else if (e.getActionCommand().matches("exportMOV"))
                 {
                 	
                 }
-            	if (e.getActionCommand().matches("square"))
+            	else if (e.getActionCommand().matches("square"))
                 {
             		doProcessing("square");
                 }
-            	if (e.getActionCommand().matches("circle"))
+            	else if (e.getActionCommand().matches("circle"))
                 {
             		doProcessing("circle");
                 }
-            	if (e.getActionCommand().matches("star"))
+            	else if (e.getActionCommand().matches("star"))
                 {
             		doProcessing("star");
                 }
-            	if (e.getActionCommand().matches("cross"))
+            	else if (e.getActionCommand().matches("cross"))
                 {
             		doProcessing("cross");
                 }
-            	if (e.getActionCommand().matches("wave"))
+            	else if (e.getActionCommand().matches("wave"))
                 {
             		doProcessing("wave");
                 }
-            	if (e.getActionCommand().matches("motionpath"))
+            	else if (e.getActionCommand().matches("motionpath"))
                 {
                 	
                 }
-            	if (e.getActionCommand().matches("color"))
+            	else if (e.getActionCommand().matches("color"))
                 {
                 	JOptionPane.showMessageDialog(null,colorChooser);
                 	view.setShapeColor(colorChooser.getColor());
                 }
-            	if (e.getActionCommand().matches("undo"))
+            	else if (e.getActionCommand().matches("undo"))
                 {
             		view.gl.undo();
             		System.out.println("UNDO CLICKED");
+                }
+            	else if (e.getActionCommand().matches("redo"))
+                {
+            		view.gl.redo();
+            		System.out.println("REDO CLICKED");
                 }
             } catch (NumberFormatException nfex) {
             }
