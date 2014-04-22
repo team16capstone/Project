@@ -19,7 +19,7 @@ public class View extends JFrame {
     private FileToolbar fileToolbar = new FileToolbar();
     private EditToolbar editToolbar = new EditToolbar();
 	private Color shapeColor = new Color(1.0f,1.0f,1.0f);
-
+	private Rotate rotate = new Rotate(false,false,0);
     private BorderLayout bLayout = new BorderLayout();
     int currentColor[] = new int[3];
     GLProfile glprofile = GLProfile.getDefault();
@@ -82,16 +82,16 @@ public class View extends JFrame {
     public MyMouseListener getMyMouseListener(){
     	return ml;
     }
-
-    public void chooseColor()
+    
+    public Rotate getRotate()
     {
-    	
+		return rotate;
     }
     
-    public boolean getRotate()
+    public void setRotate(Rotate t)
     {
-		return fileToolbar.getRotate();
-
+		rotate = t;
+		fileToolbar.setRotateColor(t.getState());
     }
     
     public Color getShapeColor(){

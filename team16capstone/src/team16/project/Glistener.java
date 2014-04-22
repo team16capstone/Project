@@ -34,10 +34,9 @@ public class Glistener implements GLEventListener{
     	gl2.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
 
 
-     
+    	angle += 1;
         for(int i = 0; shapes[i] != null; i++)
         {
-        	angle += 1;
         	gl2.glLoadIdentity();
             if(shapes[i].getType().equals("square")){
             	if(((Square)shapes[i]).getRotate())

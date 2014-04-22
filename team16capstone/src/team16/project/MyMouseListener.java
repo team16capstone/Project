@@ -36,7 +36,7 @@ public class MyMouseListener implements MouseListener{
 			active = false;
 			JOptionPane options = new JOptionPane(x);
 			options.setLayout(new FlowLayout());
-			rotate = view.getRotate();
+			rotate = view.getRotate().getState();
 			view.getGlistener().addShape(x,y,canvas.getSize().height,type,size,view.getShapeColor(),filled,thickness,rotate);
 		}
 //		System.out.println(view.getGlistener().canvas.get);

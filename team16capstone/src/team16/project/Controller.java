@@ -88,7 +88,34 @@ public class Controller {
                 {
             		doProcessing("wave");
                 }
-            	else if (e.getActionCommand().matches("motionpath"))
+            	else if (e.getActionCommand().matches("rotate"))
+                {
+            		Boolean d = false;
+
+            		if(view.getRotate().getState())
+            			view.setRotate(new Rotate(false,d,0));
+            		else
+            		{
+                		Object[] options = {"Clockwise",
+	                    "Anti-Clockwise"};
+                		int n = JOptionPane.showOptionDialog(null,
+                				"What direction would you like the shape to rotate?",
+                				"Rotation Direction",
+                				JOptionPane.YES_NO_CANCEL_OPTION,
+                				JOptionPane.QUESTION_MESSAGE,
+                				null,
+                				options,
+                				options[1]);
+                		if(n == 0)
+                			d = true;
+            			view.setRotate(new Rotate(true,d,0));
+            		}
+                }
+            	else if (e.getActionCommand().matches("motionBounce"))
+                {
+                	
+                }
+            	else if (e.getActionCommand().matches("motionPath"))
                 {
                 	
                 }

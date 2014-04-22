@@ -10,7 +10,6 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
 
@@ -28,8 +27,9 @@ public class FileToolbar extends JPanel{
 	private JButton exportMOV = new JButton();
 	
 	/**All components of Effects*/
-	private JCheckBox rotate = new JCheckBox("Rotate");
-	private JCheckBox motionPath = new JCheckBox("Motion Path");
+	private JButton rotate = new JButton();
+	private JButton motionBounce = new JButton();
+	private JButton motionPath = new JButton();
 	private FlowLayout fileLayout = new FlowLayout();
 	
 	private JButton color = new JButton("Choose Colour");
@@ -71,9 +71,13 @@ public class FileToolbar extends JPanel{
 		bar.addSeparator();
 		
 		bar.add(rotate);
+		rotate.setBackground(Color.LIGHT_GRAY);
 		rotate.setActionCommand("rotate");
+		bar.add(motionBounce);
+		motionBounce.setActionCommand("motionBounce");
 		bar.add(motionPath);
 		motionPath.setActionCommand("motionPath");
+
 		
 		bar.addSeparator();
 
@@ -121,6 +125,18 @@ public class FileToolbar extends JPanel{
 		    Image tmpMOV = ImageIO.read(getClass().getResource("/res/mov.jpg"));
 		    ImageIcon movIcon = new ImageIcon(tmpMOV.getScaledInstance(h, h, Image.SCALE_AREA_AVERAGING));
 		    exportMOV.setIcon(movIcon);
+
+		    Image tmpRotate = ImageIO.read(getClass().getResource("/res/rotate.jpg"));
+		    ImageIcon rotateIcon = new ImageIcon(tmpRotate.getScaledInstance(h, h, Image.SCALE_AREA_AVERAGING));
+		    rotate.setIcon(rotateIcon);
+		    
+		    Image tmpBounce = ImageIO.read(getClass().getResource("/res/bounce.jpg"));
+		    ImageIcon bounceIcon = new ImageIcon(tmpBounce.getScaledInstance(h, h, Image.SCALE_AREA_AVERAGING));
+		    motionBounce.setIcon(bounceIcon);
+		    
+		    Image tmpPath = ImageIO.read(getClass().getResource("/res/path.jpg"));
+		    ImageIcon pathIcon = new ImageIcon(tmpPath.getScaledInstance(h, h, Image.SCALE_AREA_AVERAGING));
+		    motionPath.setIcon(pathIcon);
 		    
 		  } catch (IOException ex) {
 		  }
@@ -135,17 +151,22 @@ public class FileToolbar extends JPanel{
 		exportMPEG.addActionListener(a);
 		exportMP4.addActionListener(a);
 		exportMOV.addActionListener(a);
+		rotate.addActionListener(a);
+		motionBounce.addActionListener(a);
 		motionPath.addActionListener(a);
 		color.addActionListener(a);
 		undo.addActionListener(a);
 		redo.addActionListener(a);
 	}
 	
-	public boolean getRotate(){
-		return rotate.isSelected();
-	}
-	
 	public void setColor(Color c){
 		color.setBackground(c);
+	}
+	
+	public void setRotateColor(Boolean b){
+		if(b)
+		rotate.setBackground(Color.YELLOW);
+		else
+		rotate.setBackground(Color.LIGHT_GRAY);
 	}
 }
