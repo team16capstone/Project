@@ -6,9 +6,8 @@ import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.GLEventListener;
-import javax.media.opengl.awt.GLJPanel;
-import javax.media.opengl.glu.GLU;
-
+import javax.media.opengl.awt.GLCanvas;
+import team16.project.animation.Rotate;
 import team16.project.shapes.Circle;
 import team16.project.shapes.Cross;
 import team16.project.shapes.Shape;
@@ -18,8 +17,8 @@ public class Glistener implements GLEventListener{
     float angle = 0;
     private Shape shapes[] = new Shape[100];
     private Shape undoShape[] = new Shape[100];
-    GLJPanel canvas;
-	public Glistener(GLJPanel canvas) {
+    GLCanvas canvas;
+	public Glistener(GLCanvas canvas) {
 		this.canvas = canvas;
 		}
 
@@ -38,64 +37,26 @@ public class Glistener implements GLEventListener{
         for(int i = 0; shapes[i] != null; i++)
         {
         	gl2.glLoadIdentity();
-            if(shapes[i].getType().equals("square")){
-            	if(((Square)shapes[i]).getRotate())
-            	{
-            		gl2.glTranslatef(((Square)shapes[i]).getX(), ((Square)shapes[i]).getY(), 0);
-            		gl2.glRotatef(angle, 0, 0, 1);
-            		gl2.glTranslatef(-((Square)shapes[i]).getX(), -((Square)shapes[i]).getY(), 0);
-            	}
-
-            	((Square)shapes[i]).drawSquare(gl2);
-            }
-            if(shapes[i].getType().equals("circle")){
-            	if(((Circle)shapes[i]).getRotate())
-            	{
-            		gl2.glTranslatef(((Circle)shapes[i]).getX(), ((Circle)shapes[i]).getY(), 0);
-            		gl2.glRotatef(angle, 0, 1, 0);
-            		gl2.glTranslatef(-((Circle)shapes[i]).getX(), -((Circle)shapes[i]).getY(), 0);
-            	}
-            	((Circle)shapes[i]).drawCircle(gl2);
-            }
-            if(shapes[i].getType().equals("cross"))
-            {
-            	if(((Cross)shapes[i]).getRotate())
-            	{
-            		gl2.glTranslatef(((Cross)shapes[i]).getX(), ((Cross)shapes[i]).getY(), 0);
-            		gl2.glRotatef(angle, 0, 0, 1);
-            		gl2.glTranslatef(-((Cross)shapes[i]).getX(), -((Cross)shapes[i]).getY(), 0);
-            	}
-            	((Cross)shapes[i]).drawCross(gl2);
-            }
+            if(shapes[i].getType().equals("square"))
+            	((Square)shapes[i]).drawSquare(gl2, angle);
+            else if(shapes[i].getType().equals("circle"))
+            	((Circle)shapes[i]).drawCircle(gl2, angle);
+            else if(shapes[i].getType().equals("cross"))
+            	((Cross)shapes[i]).drawCross(gl2, angle);
         }
     }
       
     @SuppressWarnings("unused")
 	private void update() {
-        for(int i = 0; shapes[i] != null; i++)
-        {
-            if(shapes[i].getType().equals("square")){
-//            	((Square)shapes[i]).setVertex(1, 1, ((Square)shapes[i]).getVertex(1, 1)+1);
 
-            }
-            if(shapes[i].getType().equals("circle")){
-
-            }
-            if(shapes[i].getType().equals("wave"))
-            {
-
-            }
-        }
     }
 
 	@Override
 	public void dispose(GLAutoDrawable glautodrawable) {
-		// TODO Auto-generated method stub		
 	}
 
 	@Override
 	public void init(GLAutoDrawable glautodrawable) {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -106,19 +67,14 @@ public class Glistener implements GLEventListener{
 	}
 	
 	private void setup(GL2 gl2, int width, int height) {
-    	gl2.glMatrixMode( GL2.GL_PROJECTION );
+        gl2.glMatrixMode(GL2.GL_PROJECTION);
         gl2.glLoadIdentity();
-
-        // coordinate system origin at lower left with width and height same as the window
-        GLU glu = new GLU();
-        glu.gluOrtho2D( 0.0f, width, 0.0f, height );
-
-        gl2.glMatrixMode( GL2.GL_MODELVIEW );
-
-        gl2.glViewport( 0, 0, width, height );
+        gl2.glOrthof( 0.0f, width, 0.0f, height,-height,height);
+        gl2.glMatrixMode(GL2.GL_MODELVIEW);
+        gl2.glLoadIdentity();
 	}
 	
-	public void addShape(int x, int y, int height, String type, int size, Color rGB, boolean filled, int thickness, boolean rotate){
+	public void addShape(int x, int y, int height, String type, int size, Color rGB, boolean filled, int thickness, Rotate rotate){
 		
 		int a = 0;
 		for(int i = 0;shapes[i]!=null;i++)

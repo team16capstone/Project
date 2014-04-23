@@ -1,16 +1,14 @@
 package team16.project;
 
 import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import javax.media.opengl.awt.GLJPanel;
-import javax.swing.JOptionPane;
+import javax.media.opengl.awt.GLCanvas;
 
 public class MyMouseListener implements MouseListener{
 	View view;
-	GLJPanel canvas;
+	GLCanvas canvas;
 	String type;
 	boolean active;
 	boolean rotate;
@@ -18,12 +16,14 @@ public class MyMouseListener implements MouseListener{
 	int thickness;
 	int size;
 	Color rgb = new Color(0.0f,0.0f,0.0f);
-	public MyMouseListener(View view, GLJPanel canvas) {
+	public MyMouseListener(View view, GLCanvas canvas2) {
 		this.view = view;
-		this.canvas = canvas;
+		this.canvas = canvas2;
 		type = "";
 		active = false;
 		rotate = false;
+		filled = false;
+		thickness = 1;
 		size = 1;
 		view.addMouseListener(this);
 	}
@@ -34,10 +34,10 @@ public class MyMouseListener implements MouseListener{
 		int y = arg0.getPoint().y;		
 		if(active){
 			active = false;
-			JOptionPane options = new JOptionPane(x);
-			options.setLayout(new FlowLayout());
-			rotate = view.getRotate().getState();
-			view.getGlistener().addShape(x,y,canvas.getSize().height,type,size,view.getShapeColor(),filled,thickness,rotate);
+//			JOptionPane options = new JOptionPane(x);
+//			options.setLayout(new FlowLayout());
+//			rotate = view.getRotate().getState();
+			view.getGlistener().addShape(x,y,canvas.getSize().height,type,size,view.getShapeColor(),filled,thickness,view.getRotate());
 		}
 //		System.out.println(view.getGlistener().canvas.get);
 

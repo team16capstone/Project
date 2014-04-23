@@ -4,6 +4,9 @@ import java.awt.Color;
 
 import javax.media.opengl.GL2;
 
+import team16.project.animation.Animation;
+import team16.project.animation.Rotate;
+
 
 public class Circle extends Shape{
 	private int x;
@@ -13,9 +16,9 @@ public class Circle extends Shape{
 	private int size;
 	Color rgb = new Color(0.0f,0.0f,0.0f);
 	boolean filled = true;
-	boolean rotate;
+	private Animation circleAnimation = new Animation(new Rotate(false,false,0));
 	
-	public Circle(int x, int y, int height, int size, Color rGB2, boolean filled, int thickness2, boolean rotate){
+	public Circle(int x, int y, int height, int size, Color rGB2, boolean filled, int thickness2, Rotate rotate){
 		setType("circle");
 		this.x = x;
 		this.y = height - y;
@@ -23,12 +26,17 @@ public class Circle extends Shape{
 		this.size = size;
 		this.filled = filled;
 		rgb = rGB2;
-		this.rotate = rotate;
+		if(rotate!=null)
+		circleAnimation.setRotateData(rotate);
+		else{
+			rotate = new Rotate(false,false,0);
+			circleAnimation.setRotateData(rotate);
+		}
 	}
 	
-    public void drawCircle(GL2 gl2)
+    public void drawCircle(GL2 gl2, float angle)
     {
-        
+    	circleAnimation.doAnimations(gl2, this, angle);
         gl2.glColor3f((float)rgb.getRed()/(float)255, (float)rgb.getGreen()/(float)255, (float)rgb.getBlue()/(float)255);
 
     	float theta = (float) (2 * 3.1415926 / (100)); 
@@ -36,7 +44,7 @@ public class Circle extends Shape{
     	float radial_factor = (float) (Math.cos(theta));//calculate the radial factor 
     	float xx = (float)size / (float)210 * height;//we start at angle = 0 
     	float yy = 0; 
-    	gl2.glLineWidth(5f);
+    	gl2.glLineWidth(1f);
         if (filled)
         	gl2.glBegin(GL2.GL_POLYGON);
         else
@@ -46,7 +54,7 @@ public class Circle extends Shape{
         }
     	for(int ii = 0; ii < 100; ii++) 
     	{ 
-    		gl2.glVertex2f(xx + x, yy + y);//output vertex 
+    		gl2.glVertex3f(xx + x, yy + y,0);//output vertex 
 
     		float tx = -yy; 
     		float ty = xx; 
@@ -60,10 +68,6 @@ public class Circle extends Shape{
     	gl2.glEnd();
     }
 	
-		public boolean getRotate(){
-			return rotate;
-		}
-
 		public int getX()
 		{
 			return x;
@@ -71,5 +75,9 @@ public class Circle extends Shape{
 		public int getY()
 		{
 			return height-y;
+		}
+		public float getSize()
+		{
+			return (float)size;
 		}
 }

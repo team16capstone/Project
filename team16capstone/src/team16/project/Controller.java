@@ -5,11 +5,15 @@ import java.awt.event.ActionListener;
 import javax.swing.JColorChooser;
 import javax.swing.JOptionPane;
 
+import team16.project.animation.Rotate;
+
 public class Controller {
 	
 	int object = 0;
 	int xpoints[];
 	int ypoints[];
+	Boolean direction;
+	int speed = 0;
 	View view;
 	JColorChooser colorChooser=new JColorChooser();
 	
@@ -90,25 +94,13 @@ public class Controller {
                 }
             	else if (e.getActionCommand().matches("rotate"))
                 {
-            		Boolean d = false;
+            		direction = false;
 
             		if(view.getRotate().getState())
-            			view.setRotate(new Rotate(false,d,0));
+            			view.setRotate(new Rotate(false,direction,0));
             		else
             		{
-                		Object[] options = {"Clockwise",
-	                    "Anti-Clockwise"};
-                		int n = JOptionPane.showOptionDialog(null,
-                				"What direction would you like the shape to rotate?",
-                				"Rotation Direction",
-                				JOptionPane.YES_NO_CANCEL_OPTION,
-                				JOptionPane.QUESTION_MESSAGE,
-                				null,
-                				options,
-                				options[1]);
-                		if(n == 0)
-                			d = true;
-            			view.setRotate(new Rotate(true,d,0));
+            			doRotate();
             		}
                 }
             	else if (e.getActionCommand().matches("motionBounce"))
@@ -236,5 +228,29 @@ public class Controller {
         		
     	}
     }
-
+    
+    public void doRotate(){
+		Object[] options = {"Clockwise",
+        "Anti-Clockwise"};
+		int n = JOptionPane.showOptionDialog(null,
+				"What direction would you like the shape to rotate?",
+				"Rotation Direction",
+				JOptionPane.YES_NO_CANCEL_OPTION,
+				JOptionPane.QUESTION_MESSAGE,
+				null,
+				options,
+				options[1]);
+		if(n == 0)
+			direction = true;
+   	
+    	speed = Integer.parseInt(JOptionPane.showInputDialog("Please enter a rotation speed from 1 to 100"));
+    	while(speed > 100 || speed < 1)
+    		speed = Integer.parseInt(JOptionPane.showInputDialog("INPUT NOT VALID! Please enter a rotation speed from 1 to 100"));
+    	if(speed < 1 || speed > 100)
+    		return;
+    	else
+    	{
+    		view.setRotate(new Rotate(true,direction,speed));
+    	}
+    }
 }

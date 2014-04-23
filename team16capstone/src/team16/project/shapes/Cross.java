@@ -4,6 +4,9 @@ import java.awt.Color;
 
 import javax.media.opengl.GL2;
 
+import team16.project.animation.Animation;
+import team16.project.animation.Rotate;
+
 
 public class Cross extends Shape{
 	private float nsize;
@@ -11,9 +14,9 @@ public class Cross extends Shape{
 	private int ypos;
 	private int thickness;
 	Color rgb = new Color(0.0f,0.0f,0.0f);
-	private boolean rotate;
-	
-	public Cross(int x, int y, int height, int size, Color rGB2, int thickness, boolean rotate){
+	private Animation crossAnimation = new Animation(new Rotate(false,false,0));
+
+	public Cross(int x, int y, int height, int size, Color rGB2, int thickness, Rotate rotate){
 		setType("cross");
 		
 		nsize = (((float)size)/(float)200) * (float)height;
@@ -21,30 +24,28 @@ public class Cross extends Shape{
 		ypos = height-y;
 		rgb = rGB2;
 		this.thickness = thickness;
-		this.rotate = rotate;
-	}
-public void drawCross(GL2 gl2){
-    
-    gl2.glColor3f((float)rgb.getRed()/(float)255, (float)rgb.getGreen()/(float)255, (float)rgb.getBlue()/(float)255);
-    if(rotate)
-    {
+		if(rotate!=null)
+		crossAnimation.setRotateData(rotate);
+		else
+			rotate = new Rotate(false,false,0);
+			crossAnimation.setRotateData(rotate);
 
-    }
+	}
+public void drawCross(GL2 gl2, float angle){
+	crossAnimation.doAnimations(gl2, this, angle);
+    gl2.glColor3f((float)rgb.getRed()/(float)255, (float)rgb.getGreen()/(float)255, (float)rgb.getBlue()/(float)255);
     gl2.glLineWidth((float)thickness);
 	gl2.glBegin(GL2.GL_LINE_LOOP);
-	gl2.glVertex2d(xpos,ypos);
-	gl2.glVertex2d(xpos,ypos-nsize);
-	gl2.glVertex2d(xpos,ypos+nsize);
-	gl2.glVertex2d(xpos,ypos);
-	gl2.glVertex2d(xpos-nsize,ypos);
-	gl2.glVertex2d(xpos+nsize,ypos);
-	gl2.glVertex2d(xpos,ypos);
+	gl2.glVertex3d(xpos,ypos,0);
+	gl2.glVertex3d(xpos,ypos-nsize,0);
+	gl2.glVertex3d(xpos,ypos+nsize,0);
+	gl2.glVertex3d(xpos,ypos,0);
+	gl2.glVertex3d(xpos-nsize,ypos,0);
+	gl2.glVertex3d(xpos+nsize,ypos,0);
+	gl2.glVertex3d(xpos,ypos,0);
 	gl2.glEnd();
 }
 
-public boolean getRotate(){
-	return rotate;
-}
 
 public int getX()
 {

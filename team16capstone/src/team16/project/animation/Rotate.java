@@ -1,4 +1,4 @@
-package team16.project;
+package team16.project.animation;
 
 public class Rotate {
 	private Boolean state = false;

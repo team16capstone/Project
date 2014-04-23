@@ -6,9 +6,11 @@ import java.awt.event.ActionListener;
 
 import javax.media.opengl.GLCapabilities;
 import javax.media.opengl.GLProfile;
-import javax.media.opengl.awt.GLJPanel;
+import javax.media.opengl.awt.GLCanvas;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+
+import team16.project.animation.Rotate;
 
 import com.jogamp.opengl.util.FPSAnimator;
 
@@ -24,7 +26,7 @@ public class View extends JFrame {
     int currentColor[] = new int[3];
     GLProfile glprofile = GLProfile.getDefault();
     GLCapabilities glcapabilities = new GLCapabilities( glprofile );
-    GLJPanel canvas = new GLJPanel( glcapabilities );
+    GLCanvas canvas = new GLCanvas( glcapabilities );
     Glistener gl = new Glistener(canvas);
     MyMouseListener ml = new MyMouseListener(this,canvas);
     MyMouseListener MListener;
