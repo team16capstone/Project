@@ -1,25 +1,18 @@
 package team16.project.shapes;
 
+import java.io.Serializable;
 
-public abstract class Shape{
+
+public abstract class Shape implements Serializable{
+	private static final long serialVersionUID = 1L;
 	private String type;
-	private int shapeId;
+	
+	public Shape(String type){
+		this.type = type;
+	}
 	
 	public String getType()
 	{
 		return type;
-	}
-	
-	public void setType(String s){
-		type = s;
-	}
-	
-	public int getShapeId()
-	{
-		return shapeId;
-	}
-	
-	public void setShapeId(int id){
-		shapeId= id;
 	}
 }

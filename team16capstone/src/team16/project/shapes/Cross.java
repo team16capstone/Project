@@ -1,6 +1,7 @@
 package team16.project.shapes;
 
 import java.awt.Color;
+import java.io.Serializable;
 
 import javax.media.opengl.GL2;
 
@@ -8,16 +9,17 @@ import team16.project.animation.Animation;
 import team16.project.animation.Rotate;
 
 
-public class Cross extends Shape{
+public class Cross extends Shape implements Serializable{
+	private static final long serialVersionUID = 1L;
 	private float nsize;
 	private int xpos;
 	private int ypos;
 	private int thickness;
 	Color rgb = new Color(0.0f,0.0f,0.0f);
-	private Animation crossAnimation = new Animation(new Rotate(false,false,0));
+	private Animation crossAnimation = new Animation(new Rotate(false,false,false,0));
 
 	public Cross(int x, int y, int height, int size, Color rGB2, int thickness, Rotate rotate){
-		setType("cross");
+		super("cross");
 		
 		nsize = (((float)size)/(float)200) * (float)height;
 		xpos = x;
@@ -27,7 +29,7 @@ public class Cross extends Shape{
 		if(rotate!=null)
 		crossAnimation.setRotateData(rotate);
 		else
-			rotate = new Rotate(false,false,0);
+			rotate = new Rotate(false,false,false,0);
 			crossAnimation.setRotateData(rotate);
 
 	}

@@ -21,7 +21,7 @@ public class View extends JFrame {
     private FileToolbar fileToolbar = new FileToolbar();
     private EditToolbar editToolbar = new EditToolbar();
 	private Color shapeColor = new Color(1.0f,1.0f,1.0f);
-	private Rotate rotate = new Rotate(false,false,0);
+	private Rotate rotate = new Rotate(false,false,false,0);
     private BorderLayout bLayout = new BorderLayout();
     int currentColor[] = new int[3];
     GLProfile glprofile = GLProfile.getDefault();
@@ -35,7 +35,7 @@ public class View extends JFrame {
     	this.setLayout(bLayout);
 
 
-        FPSAnimator animator = new FPSAnimator(canvas,30, true);
+        FPSAnimator animator = new FPSAnimator(canvas,120, true);
         
         //JButton button = new JButton("button");
         setJMenuBar(menu);

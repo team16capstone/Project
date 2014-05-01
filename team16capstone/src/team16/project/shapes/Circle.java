@@ -1,6 +1,7 @@
 package team16.project.shapes;
 
 import java.awt.Color;
+import java.io.Serializable;
 
 import javax.media.opengl.GL2;
 
@@ -8,7 +9,8 @@ import team16.project.animation.Animation;
 import team16.project.animation.Rotate;
 
 
-public class Circle extends Shape{
+public class Circle extends Shape implements Serializable{
+	private static final long serialVersionUID = 1L;
 	private int x;
 	private int y;
 	private int height;
@@ -16,20 +18,21 @@ public class Circle extends Shape{
 	private int size;
 	Color rgb = new Color(0.0f,0.0f,0.0f);
 	boolean filled = true;
-	private Animation circleAnimation = new Animation(new Rotate(false,false,0));
+	private Animation circleAnimation = new Animation(new Rotate(false,false,false,0));
 	
-	public Circle(int x, int y, int height, int size, Color rGB2, boolean filled, int thickness2, Rotate rotate){
-		setType("circle");
+	public Circle(int x, int y, int height, int size, Color rGB2, boolean filled, int thickness, Rotate rotate){
+		super("circle");
 		this.x = x;
 		this.y = height - y;
 		this.height = height;
 		this.size = size;
 		this.filled = filled;
 		rgb = rGB2;
+		this.thickness = thickness;
 		if(rotate!=null)
 		circleAnimation.setRotateData(rotate);
 		else{
-			rotate = new Rotate(false,false,0);
+			rotate = new Rotate(false,false,false,0);
 			circleAnimation.setRotateData(rotate);
 		}
 	}
@@ -74,7 +77,7 @@ public class Circle extends Shape{
 		}
 		public int getY()
 		{
-			return height-y;
+			return y;
 		}
 		public float getSize()
 		{

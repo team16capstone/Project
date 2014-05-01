@@ -1,14 +1,19 @@
 package team16.project.animation;
 
-public class Rotate {
+import java.io.Serializable;
+
+public class Rotate implements Serializable{
+	private static final long serialVersionUID = 7387805445836104683L;
+	private Boolean d2D3D = false;
 	private Boolean state = false;
 	private Boolean direction = false;
 	private int speed = 0;
 	
-	public Rotate(Boolean s, Boolean d, int sp){
-		state = s;
-		direction = d;
-		speed = sp;
+	public Rotate(Boolean d2D3D, Boolean state, Boolean direction, int speed){
+		this.d2D3D = d2D3D;
+		this.state = state;
+		this.direction = direction;
+		this.speed = speed;
 	}
 	
 	public Boolean getState(){
@@ -33,5 +38,13 @@ public class Rotate {
 	
 	public void setSpeed(int s){
 		speed = s;
+	}
+	
+	public Boolean getd2D3D(){
+		return d2D3D;
+	}
+	
+	public void setd2D3D(Boolean d){
+		d2D3D = d;
 	}
 }

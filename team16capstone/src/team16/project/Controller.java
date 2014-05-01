@@ -1,21 +1,33 @@
 package team16.project;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 import javax.swing.JColorChooser;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 import team16.project.animation.Rotate;
+import team16.project.shapes.Shape;
 
-public class Controller {
+public class Controller{
 	
 	int object = 0;
 	int xpoints[];
 	int ypoints[];
 	Boolean direction;
+	Boolean dimension;
 	int speed = 0;
 	View view;
 	JColorChooser colorChooser=new JColorChooser();
+	JFileChooser fileChooser = new JFileChooser();
+
 	
 	Controller(Model model, View view) {
 		this.view = view;
@@ -26,16 +38,6 @@ public class Controller {
         view.addToolbarListener(tl);
 	}
     
-    class ButtonListener implements ActionListener {
-        public void actionPerformed(ActionEvent e) {
-            try {
-                System.out.println("HEY IT WORKED");
-            } catch (NumberFormatException nfex) {
-            }
-        }
-    }
-    
-
     class ToolbarListener implements ActionListener {
         View view;
     	public ToolbarListener(View view) {
@@ -50,11 +52,11 @@ public class Controller {
                 }
             	else if (e.getActionCommand().matches("open"))
                 {
-                	
+                	doLoad();
                 }
             	else if (e.getActionCommand().matches("save"))
                 {
-                	
+                	doSave();
                 }
             	else if (e.getActionCommand().matches("exportAVI"))
                 {
@@ -97,7 +99,7 @@ public class Controller {
             		direction = false;
 
             		if(view.getRotate().getState())
-            			view.setRotate(new Rotate(false,direction,0));
+            			view.setRotate(new Rotate(false,false,direction,0));
             		else
             		{
             			doRotate();
@@ -119,12 +121,10 @@ public class Controller {
             	else if (e.getActionCommand().matches("undo"))
                 {
             		view.gl.undo();
-            		System.out.println("UNDO CLICKED");
                 }
             	else if (e.getActionCommand().matches("redo"))
                 {
             		view.gl.redo();
-            		System.out.println("REDO CLICKED");
                 }
             } catch (NumberFormatException nfex) {
             }
@@ -145,11 +145,11 @@ public class Controller {
                 }
                 else if (e.getActionCommand().matches("Save Project"))
                 {
-                	
+                	doSave();
                 }
                 else if (e.getActionCommand().matches("Open Project"))
                 {
-                	
+                	doLoad();
                 }
                 else if (e.getActionCommand().matches("Export To AVI"))
                 {
@@ -191,7 +191,9 @@ public class Controller {
                 {
             		doProcessing("wave");
                 }
-            } catch (NumberFormatException nfex) {
+            }
+            catch (NumberFormatException nfex) {
+            	System.out.println("Number Format Exception Thrown");
             }
         }
     }
@@ -208,7 +210,7 @@ public class Controller {
         	view.ml.setType(shape);
         	view.ml.setSize(tmpSize);
         	int tmpFilled = 1;
-        	if(!shape.equals("cross"))
+        	if(!shape.equals("cross") && !shape.equals("wave"))
         	tmpFilled = (JOptionPane.showOptionDialog(null, "Would you like this " + shape + " to be filled?","Shape Colour Fill",JOptionPane.YES_NO_OPTION , JOptionPane.INFORMATION_MESSAGE, null, null, 1));
         	if(tmpFilled == 0)
         		view.ml.setFilled(true);
@@ -230,6 +232,21 @@ public class Controller {
     }
     
     public void doRotate(){
+    	Object[] option = {"2D",
+        "3D"};
+		int n1 = JOptionPane.showOptionDialog(null,
+				"What type of rotation would you like to use?",
+				"Rotation Dimension",
+				JOptionPane.YES_NO_CANCEL_OPTION,
+				JOptionPane.QUESTION_MESSAGE,
+				null,
+				option,
+				option[1]);
+		if(n1 == 0)
+			dimension = false;
+		else
+			dimension = true;
+    	
 		Object[] options = {"Clockwise",
         "Anti-Clockwise"};
 		int n = JOptionPane.showOptionDialog(null,
@@ -243,14 +260,50 @@ public class Controller {
 		if(n == 0)
 			direction = true;
    	
-    	speed = Integer.parseInt(JOptionPane.showInputDialog("Please enter a rotation speed from 1 to 100"));
-    	while(speed > 100 || speed < 1)
-    		speed = Integer.parseInt(JOptionPane.showInputDialog("INPUT NOT VALID! Please enter a rotation speed from 1 to 100"));
-    	if(speed < 1 || speed > 100)
+    	speed = Integer.parseInt(JOptionPane.showInputDialog("Please enter a rotation speed from 1 to 500"));
+    	while(speed > 500 || speed < 1)
+    		speed = Integer.parseInt(JOptionPane.showInputDialog("INPUT NOT VALID! Please enter a rotation speed from 1 to 500"));
+    	if(speed < 1 || speed > 500)
     		return;
     	else
     	{
-    		view.setRotate(new Rotate(true,direction,speed));
+    		view.setRotate(new Rotate(dimension,true,direction,speed));
     	}
+    }
+    
+    public void doSave(){
+    	int a = fileChooser.showSaveDialog(view);
+    	if (a == JFileChooser.APPROVE_OPTION) {
+	    	        File file = fileChooser.getSelectedFile();
+			try {
+				ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
+				out.writeObject(view.getGlistener().getShapes());
+				out.close();
+			} catch (FileNotFoundException fn) {
+				fn.printStackTrace();
+			} catch (IOException nf) {
+				nf.printStackTrace();
+			}
+    	}
+    }
+    
+    public void doLoad(){
+    	int a = fileChooser.showOpenDialog(view);
+    	if (a == JFileChooser.APPROVE_OPTION) {
+		    	        File file = fileChooser.getSelectedFile();
+			try {
+				ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
+				try {
+					view.getGlistener().setShapes((Shape[])in.readObject());
+					in.close();
+				} catch (ClassNotFoundException fn) {
+					fn.printStackTrace();
+				}
+			} catch (FileNotFoundException nf) {
+				nf.printStackTrace();
+			} catch (IOException fnf) {
+				fnf.printStackTrace();
+			}
+	    }
     }
 }

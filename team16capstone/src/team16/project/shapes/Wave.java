@@ -1,25 +1,88 @@
 package team16.project.shapes;
 
+import java.awt.Color;
+import java.io.Serializable;
 
-public class Wave extends Shape{
-	private int vertices[][] = new int[5][5];
+import javax.media.opengl.GL2;
+
+import team16.project.animation.Animation;
+import team16.project.animation.Rotate;
+
+
+public class Wave extends Shape implements Serializable{
+	private static final long serialVersionUID = 1L;
+	private float nsize;
+	private int xpos;
+	private int ypos;
+	private int thickness;
+	Color rgb = new Color(0.0f,0.0f,0.0f);
+	private Animation waveAnimation = new Animation(new Rotate(false,false,false,0));
 	
-	public Wave(){
-		setType("wave");
+	public Wave(int x, int y, int height, int size, Color rGB2, int thickness, Rotate rotate){
+		super("wave");
+		
+		nsize = (((float)size)/(float)200) * (float)height;
+		xpos = x;
+		ypos = height-y;
+		rgb = rGB2;
+		this.thickness = thickness;
+		if(rotate!=null)
+		waveAnimation.setRotateData(rotate);
+		else
+			rotate = new Rotate(false,false,false,0);
+			waveAnimation.setRotateData(rotate);
+	}
+	public void drawWave(GL2 gl2, float angle){
+		waveAnimation.doAnimations(gl2, this, angle);
+	    gl2.glColor3f((float)rgb.getRed()/(float)255, (float)rgb.getGreen()/(float)255, (float)rgb.getBlue()/(float)255);
+	    gl2.glLineWidth((float)thickness);
+	    float ypoint = ypos + nsize/15/2*20;
+	    
+	    //FIRST WAVE
+		gl2.glBegin(GL2.GL_LINE_LOOP);
+	    for(float i = 0.0f; i < 2.1f; i += 0.1f){
+			gl2.glVertex3d(xpos - nsize/3 +(nsize*Math.sin(i * Math.PI)/6),ypoint,0);
+			ypoint -= (float)nsize/15f;
+	    }
+	    for(float i = 2.1f; i > 0.0f; i -= 0.1f){
+			gl2.glVertex3d(xpos - nsize/3+(nsize*Math.sin(i * Math.PI)/6),ypoint,0);
+			ypoint += (float)nsize/15f;
+	    }
+		gl2.glEnd();
+		
+		//SECOND WAVE
+		gl2.glBegin(GL2.GL_LINE_LOOP);
+	    for(float i = 0.0f; i < 2.1f; i += 0.1f){
+			gl2.glVertex3d(xpos+(nsize*Math.sin(i * Math.PI)/6),ypoint,0);
+			ypoint -= (float)nsize/15f;
+	    }
+	    for(float i = 2.1f; i > 0.0f; i -= 0.1f){
+			gl2.glVertex3d(xpos+(nsize*Math.sin(i * Math.PI)/6),ypoint,0);
+			ypoint += (float)nsize/15f;
+	    }
+		gl2.glEnd();
+		
+		//THIRD WAVE
+		gl2.glBegin(GL2.GL_LINE_LOOP);
+	    for(float i = 0.0f; i < 2.1f; i += 0.1f){
+			gl2.glVertex3d(xpos + nsize/3+(nsize*Math.sin(i * Math.PI)/6),ypoint,0);
+			ypoint -= (float)nsize/15f;
+	    }
+	    for(float i = 2.1f; i > 0.0f; i -= 0.1f){
+			gl2.glVertex3d(xpos + nsize/3+(nsize*Math.sin(i * Math.PI)/6),ypoint,0);
+			ypoint += (float)nsize/15f;
+	    }
+		gl2.glEnd();
+	}
 
-		vertices[0][0] = 0;
-		vertices[0][1] = 100;
-		vertices[0][2] = 100;
-		vertices[0][3] = 0;
-		vertices[0][4] = 0;
-		vertices[1][0] = 0;
-		vertices[1][1] = 0;
-		vertices[1][2] = 100;
-		vertices[1][3] = 100;
-		vertices[1][4] = 0;
+
+	public int getX()
+	{
+		return xpos;
+	}
+	public int getY()
+	{
+		return ypos;
 	}
 	
-	public int getVertex(int i, int j){
-		return vertices[i][j];
-	}
 }

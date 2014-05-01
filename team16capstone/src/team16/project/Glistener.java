@@ -12,6 +12,8 @@ import team16.project.shapes.Circle;
 import team16.project.shapes.Cross;
 import team16.project.shapes.Shape;
 import team16.project.shapes.Square;
+import team16.project.shapes.Star;
+import team16.project.shapes.Wave;
 
 public class Glistener implements GLEventListener{
     float angle = 0;
@@ -33,9 +35,8 @@ public class Glistener implements GLEventListener{
     	gl2.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
 
 
-    	angle += 1;
         for(int i = 0; shapes[i] != null; i++)
-        {
+        { 
         	gl2.glLoadIdentity();
             if(shapes[i].getType().equals("square"))
             	((Square)shapes[i]).drawSquare(gl2, angle);
@@ -43,7 +44,12 @@ public class Glistener implements GLEventListener{
             	((Circle)shapes[i]).drawCircle(gl2, angle);
             else if(shapes[i].getType().equals("cross"))
             	((Cross)shapes[i]).drawCross(gl2, angle);
+            else if(shapes[i].getType().equals("star"))
+            	((Star)shapes[i]).drawStar(gl2, angle);
+            else if(shapes[i].getType().equals("wave"))
+            	((Wave)shapes[i]).drawWave(gl2, angle);
         }
+        	angle += 0.1;
     }
       
     @SuppressWarnings("unused")
@@ -81,14 +87,17 @@ public class Glistener implements GLEventListener{
 		{
 			a = i+1;
 		}
-		System.out.println("Adding shape to " + a);
+		System.out.println("Adding " + type +" to position " + a);
 		if(type.equals("square"))
 			shapes[a] = new Square(x,y,height,size,rGB,filled,thickness,rotate);
 		else if(type.equals("circle"))
 			shapes[a] = new Circle(x,y,height,size,rGB,filled,thickness,rotate);
 		else if(type.equals("cross"))
 			shapes[a] = new Cross(x,y,height,size,rGB,thickness,rotate);
-
+		else if(type.equals("wave"))
+			shapes[a] = new Wave(x,y,height,size,rGB,thickness,rotate);
+//		else if(type.equals("star"))
+//			shapes[a] = new Star(x,y,height,size,rGB,filled,thickness,rotate);
 	}
 	
 	public void reset()
@@ -128,5 +137,20 @@ public class Glistener implements GLEventListener{
 				shapes[a] = undoShape[b];
 				undoShape[b] = null;
 		}
+	}
+	public Shape[] getShapes(){
+		return shapes;
+	}
+	
+	public void setShapes(Shape[] shapes){
+		this.shapes = shapes;
+	}
+	
+	public Square getShape(){
+		return (Square)shapes[0];
+	}
+	
+	public void loadShape(Square shape){
+		this.shapes[0] = (Square)shape;
 	}
 }
