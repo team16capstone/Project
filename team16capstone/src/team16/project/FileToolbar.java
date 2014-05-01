@@ -165,8 +165,15 @@ public class FileToolbar extends JPanel{
 	
 	public void setRotateColor(Boolean b){
 		if(b)
-		rotate.setBackground(Color.YELLOW);
+			rotate.setBackground(Color.YELLOW);
 		else
-		rotate.setBackground(Color.LIGHT_GRAY);
+			rotate.setBackground(Color.LIGHT_GRAY);
+	}
+	
+	public void setBounceColor(Boolean b){
+		if(b)
+			motionBounce.setBackground(Color.YELLOW);
+		else
+			motionBounce.setBackground(Color.LIGHT_GRAY);
 	}
 }

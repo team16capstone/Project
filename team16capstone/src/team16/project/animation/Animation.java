@@ -13,35 +13,224 @@ import team16.project.shapes.Wave;
 
 public class Animation implements Serializable{
 	private static final long serialVersionUID = 1L;
-	//	private Boolean rotate;
-//	private Boolean bounce;
+	private Bounce bounce;
+
 //	private Boolean path;
 	private Rotate rotate;
 	
-	public Animation(Rotate rotate){
+	public Animation(Rotate rotate,Bounce bounce){
 		this.rotate = rotate;
+		this.bounce = bounce;
 	}
-
-//	public void setRotate(Boolean rotate)
-//	{
-//		this.rotate = rotate;
-//	}
 	
 	public void setRotateData(Rotate rotate){
 		this.rotate = rotate;
 	}
+	public void setBounce(Bounce bounce){
+		this.bounce = bounce;
+	}
 
-//	public void setBounce(Boolean bounce)
-//	{
-//		this.bounce = bounce;
-//	}
-	
 //	public void setPath(Boolean bounce)
 //	{
 //		this.bounce = bounce;
 //	}
 	
 	public void doAnimations(GL2 gl2, Shape shape, float angle){
+		/**BOUNCE ANIMATION BEGINS HERE*/
+		if(bounce.getBounce())
+		{
+			if(shape.getType().equals("square")){
+				if(bounce.getbUp())
+					if(bounce.getbRight())
+						if(((Square)shape).getY()<((Square)shape).getHeight()-((Square)shape).getSize())
+							if(((Square)shape).getX()<((Square)shape).getWidth()-((Square)shape).getSize())
+								((Square)shape).setXY(((Square)shape).getX()+bounce.getSpeed(), ((Square)shape).getY()+bounce.getSpeed());
+							else
+								bounce.setbRight(false);
+						else
+							bounce.setbUp(false);
+					else
+						if(((Square)shape).getY()<((Square)shape).getHeight()-((Square)shape).getSize())
+							if(((Square)shape).getX()>0+((Square)shape).getSize())
+								((Square)shape).setXY(((Square)shape).getX()-bounce.getSpeed(), ((Square)shape).getY()+bounce.getSpeed());
+							else
+								bounce.setbRight(true);
+						else
+							bounce.setbUp(false);
+				else
+					if(bounce.getbRight())
+						if(((Square)shape).getY()>0+((Square)shape).getSize())
+							if(((Square)shape).getX()<((Square)shape).getWidth()-((Square)shape).getSize())
+								((Square)shape).setXY(((Square)shape).getX()+bounce.getSpeed(), ((Square)shape).getY()-bounce.getSpeed());
+							else
+								bounce.setbRight(false);
+						else
+							bounce.setbUp(true);
+					else
+						if(((Square)shape).getY()>0+((Square)shape).getSize())
+							if(((Square)shape).getX()>0+((Square)shape).getSize())
+								((Square)shape).setXY(((Square)shape).getX()-bounce.getSpeed(), ((Square)shape).getY()-bounce.getSpeed());
+							else
+								bounce.setbRight(true);
+						else
+							bounce.setbUp(true);
+			}
+			else if(shape.getType().equals("cross")){
+				if(bounce.getbUp())
+					if(bounce.getbRight())
+						if(((Cross)shape).getY()<((Cross)shape).getHeight()-((Cross)shape).getSize())
+							if(((Cross)shape).getX()<((Cross)shape).getWidth()-((Cross)shape).getSize())
+								((Cross)shape).setXY(((Cross)shape).getX()+bounce.getSpeed(), ((Cross)shape).getY()+bounce.getSpeed());
+							else
+								bounce.setbRight(false);
+						else
+							bounce.setbUp(false);
+					else
+						if(((Cross)shape).getY()<((Cross)shape).getHeight()-((Cross)shape).getSize())
+							if(((Cross)shape).getX()>0+((Cross)shape).getSize())
+								((Cross)shape).setXY(((Cross)shape).getX()-bounce.getSpeed(), ((Cross)shape).getY()+bounce.getSpeed());
+							else
+								bounce.setbRight(true);
+						else
+							bounce.setbUp(false);
+				else
+					if(bounce.getbRight())
+						if(((Cross)shape).getY()>0+((Cross)shape).getSize())
+							if(((Cross)shape).getX()<((Cross)shape).getWidth()-((Cross)shape).getSize())
+								((Cross)shape).setXY(((Cross)shape).getX()+bounce.getSpeed(), ((Cross)shape).getY()-bounce.getSpeed());
+							else
+								bounce.setbRight(false);
+						else
+							bounce.setbUp(true);
+					else
+						if(((Cross)shape).getY()>0+((Cross)shape).getSize())
+							if(((Cross)shape).getX()>0+((Cross)shape).getSize())
+								((Cross)shape).setXY(((Cross)shape).getX()-bounce.getSpeed(), ((Cross)shape).getY()-bounce.getSpeed());
+							else
+								bounce.setbRight(true);
+						else
+							bounce.setbUp(true);
+			}
+			else if(shape.getType().equals("circle")){
+				if(bounce.getbUp())
+					if(bounce.getbRight())
+						if(((Circle)shape).getY()<((Circle)shape).getHeight()-((Circle)shape).getSize())
+							if(((Circle)shape).getX()<((Circle)shape).getWidth()-((Circle)shape).getSize())
+								((Circle)shape).setXY(((Circle)shape).getX()+bounce.getSpeed(), ((Circle)shape).getY()+bounce.getSpeed());
+							else
+								bounce.setbRight(false);
+						else
+							bounce.setbUp(false);
+					else
+						if(((Circle)shape).getY()<((Circle)shape).getHeight()-((Circle)shape).getSize())
+							if(((Circle)shape).getX()>0+((Circle)shape).getSize())
+								((Circle)shape).setXY(((Circle)shape).getX()-bounce.getSpeed(), ((Circle)shape).getY()+bounce.getSpeed());
+							else
+								bounce.setbRight(true);
+						else
+							bounce.setbUp(false);
+				else
+					if(bounce.getbRight())
+						if(((Circle)shape).getY()>0+((Circle)shape).getSize())
+							if(((Circle)shape).getX()<((Circle)shape).getWidth()-((Circle)shape).getSize())
+								((Circle)shape).setXY(((Circle)shape).getX()+bounce.getSpeed(), ((Circle)shape).getY()-bounce.getSpeed());
+							else
+								bounce.setbRight(false);
+						else
+							bounce.setbUp(true);
+					else
+						if(((Circle)shape).getY()>0+((Circle)shape).getSize())
+							if(((Circle)shape).getX()>0+((Circle)shape).getSize())
+								((Circle)shape).setXY(((Circle)shape).getX()-bounce.getSpeed(), ((Circle)shape).getY()-bounce.getSpeed());
+							else
+								bounce.setbRight(true);
+						else
+							bounce.setbUp(true);
+			}
+			else if(shape.getType().equals("wave")){
+				if(bounce.getbUp())
+					if(bounce.getbRight())
+						if(((Wave)shape).getY()<((Wave)shape).getHeight()-((Wave)shape).getSize())
+							if(((Wave)shape).getX()<((Wave)shape).getWidth()-((Wave)shape).getSize())
+								((Wave)shape).setXY(((Wave)shape).getX()+bounce.getSpeed(), ((Wave)shape).getY()+bounce.getSpeed());
+							else
+								bounce.setbRight(false);
+						else
+							bounce.setbUp(false);
+					else
+						if(((Wave)shape).getY()<((Wave)shape).getHeight()-((Wave)shape).getSize())
+							if(((Wave)shape).getX()>0+((Wave)shape).getSize())
+								((Wave)shape).setXY(((Wave)shape).getX()-bounce.getSpeed(), ((Wave)shape).getY()+bounce.getSpeed());
+							else
+								bounce.setbRight(true);
+						else
+							bounce.setbUp(false);
+				else
+					if(bounce.getbRight())
+						if(((Wave)shape).getY()>0+((Wave)shape).getSize())
+							if(((Wave)shape).getX()<((Wave)shape).getWidth()-((Wave)shape).getSize())
+								((Wave)shape).setXY(((Wave)shape).getX()+bounce.getSpeed(), ((Wave)shape).getY()-bounce.getSpeed());
+							else
+								bounce.setbRight(false);
+						else
+							bounce.setbUp(true);
+					else
+						if(((Wave)shape).getY()>0+((Wave)shape).getSize())
+							if(((Wave)shape).getX()>0+((Wave)shape).getSize())
+								((Wave)shape).setXY(((Wave)shape).getX()-bounce.getSpeed(), ((Wave)shape).getY()-bounce.getSpeed());
+							else
+								bounce.setbRight(true);
+						else
+							bounce.setbUp(true);
+			}
+			else if(shape.getType().equals("star")){
+				if(bounce.getbUp())
+					if(bounce.getbRight())
+						if(((Star)shape).getY()<((Star)shape).getHeight()-((Star)shape).getSize())
+							if(((Star)shape).getX()<((Star)shape).getWidth()-((Star)shape).getSize())
+								((Star)shape).setXY(((Star)shape).getX()+bounce.getSpeed(), ((Star)shape).getY()+bounce.getSpeed());
+							else
+								bounce.setbRight(false);
+						else
+							bounce.setbUp(false);
+					else
+						if(((Star)shape).getY()<((Star)shape).getHeight()-((Star)shape).getSize())
+							if(((Star)shape).getX()>0+((Star)shape).getSize())
+								((Star)shape).setXY(((Star)shape).getX()-bounce.getSpeed(), ((Star)shape).getY()+bounce.getSpeed());
+							else
+								bounce.setbRight(true);
+						else
+							bounce.setbUp(false);
+				else
+					if(bounce.getbRight())
+						if(((Star)shape).getY()>0+((Star)shape).getSize())
+							if(((Star)shape).getX()<((Star)shape).getWidth()-((Star)shape).getSize())
+								((Star)shape).setXY(((Star)shape).getX()+bounce.getSpeed(), ((Star)shape).getY()-bounce.getSpeed());
+							else
+								bounce.setbRight(false);
+						else
+							bounce.setbUp(true);
+					else
+						if(((Star)shape).getY()>0+((Star)shape).getSize())
+							if(((Star)shape).getX()>0+((Star)shape).getSize())
+								((Star)shape).setXY(((Star)shape).getX()-bounce.getSpeed(), ((Star)shape).getY()-bounce.getSpeed());
+							else
+								bounce.setbRight(true);
+						else
+							bounce.setbUp(true);
+			}
+		}
+		
+		
+		
+		/**MOTION PATH ANIMATION BEGINS HERE*/
+		
+		
+		
+		
+		
+		
+		/**ROTATION ANIMATION BEGINS HERE*/
 		if (rotate.getState())
 		{
 			if(shape.getType().equals("square")){
@@ -134,5 +323,7 @@ public class Animation implements Serializable{
 				}
 			}
 		}
+		
+		
 	}
 }

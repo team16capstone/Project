@@ -6,6 +6,7 @@ import java.io.Serializable;
 import javax.media.opengl.GL2;
 
 import team16.project.animation.Animation;
+import team16.project.animation.Bounce;
 import team16.project.animation.Rotate;
 
 
@@ -13,17 +14,18 @@ public class Circle extends Shape implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private int x;
 	private int y;
+	private int width;
 	private int height;
 	private int thickness;
 	private int size;
 	Color rgb = new Color(0.0f,0.0f,0.0f);
 	boolean filled = true;
-	private Animation circleAnimation = new Animation(new Rotate(false,false,false,0));
-	
-	public Circle(int x, int y, int height, int size, Color rGB2, boolean filled, int thickness, Rotate rotate){
+	private Animation circleAnimation = new Animation(new Rotate(false,false,false,0),new Bounce(false,0));
+	public Circle(int x, int y, int width,int height, int size, Color rGB2, boolean filled, int thickness, Rotate rotate, Bounce bounce){
 		super("circle");
 		this.x = x;
 		this.y = height - y;
+		this.width = width;
 		this.height = height;
 		this.size = size;
 		this.filled = filled;
@@ -31,10 +33,8 @@ public class Circle extends Shape implements Serializable{
 		this.thickness = thickness;
 		if(rotate!=null)
 		circleAnimation.setRotateData(rotate);
-		else{
-			rotate = new Rotate(false,false,false,0);
-			circleAnimation.setRotateData(rotate);
-		}
+
+		circleAnimation.setBounce(bounce);
 	}
 	
     public void drawCircle(GL2 gl2, float angle)
@@ -82,5 +82,17 @@ public class Circle extends Shape implements Serializable{
 		public float getSize()
 		{
 			return (float)size;
+		}
+		public float getWidth()
+		{
+			return width;
+		}
+		public float getHeight()
+		{
+			return height;
+		}
+		public void setXY(int x, int y){
+			this.x = x;
+			this.y = y;
 		}
 }

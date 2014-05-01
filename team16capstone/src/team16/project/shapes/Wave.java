@@ -6,6 +6,7 @@ import java.io.Serializable;
 import javax.media.opengl.GL2;
 
 import team16.project.animation.Animation;
+import team16.project.animation.Bounce;
 import team16.project.animation.Rotate;
 
 
@@ -14,23 +15,25 @@ public class Wave extends Shape implements Serializable{
 	private float nsize;
 	private int xpos;
 	private int ypos;
+	private int height;
+	private int width;
 	private int thickness;
 	Color rgb = new Color(0.0f,0.0f,0.0f);
-	private Animation waveAnimation = new Animation(new Rotate(false,false,false,0));
+	private Animation waveAnimation = new Animation(new Rotate(false,false,false,0),new Bounce(false,0));
 	
-	public Wave(int x, int y, int height, int size, Color rGB2, int thickness, Rotate rotate){
+	public Wave(int x, int y,int width, int height, int size, Color rGB2, int thickness, Rotate rotate, Bounce bounce){
 		super("wave");
-		
+		this.width = width;
+		this.height = height;
 		nsize = (((float)size)/(float)200) * (float)height;
 		xpos = x;
 		ypos = height-y;
 		rgb = rGB2;
 		this.thickness = thickness;
 		if(rotate!=null)
-		waveAnimation.setRotateData(rotate);
-		else
-			rotate = new Rotate(false,false,false,0);
 			waveAnimation.setRotateData(rotate);
+
+		waveAnimation.setBounce(bounce);
 	}
 	public void drawWave(GL2 gl2, float angle){
 		waveAnimation.doAnimations(gl2, this, angle);
@@ -83,6 +86,22 @@ public class Wave extends Shape implements Serializable{
 	public int getY()
 	{
 		return ypos;
+	}
+	public float getSize()
+	{
+		return nsize;
+	}
+	public float getWidth()
+	{
+		return width;
+	}
+	public float getHeight()
+	{
+		return height;
+	}
+	public void setXY(int x, int y){
+		xpos = x;
+		ypos = y;
 	}
 	
 }

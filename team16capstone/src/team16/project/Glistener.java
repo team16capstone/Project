@@ -7,6 +7,8 @@ import javax.media.opengl.GL2;
 import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.GLEventListener;
 import javax.media.opengl.awt.GLCanvas;
+
+import team16.project.animation.Bounce;
 import team16.project.animation.Rotate;
 import team16.project.shapes.Circle;
 import team16.project.shapes.Cross;
@@ -80,7 +82,7 @@ public class Glistener implements GLEventListener{
         gl2.glLoadIdentity();
 	}
 	
-	public void addShape(int x, int y, int height, String type, int size, Color rGB, boolean filled, int thickness, Rotate rotate){
+	public void addShape(int x, int y,int width, int height, String type, int size, Color rGB, boolean filled, int thickness, Rotate rotate, Bounce bounce){
 		
 		int a = 0;
 		for(int i = 0;shapes[i]!=null;i++)
@@ -89,15 +91,15 @@ public class Glistener implements GLEventListener{
 		}
 		System.out.println("Adding " + type +" to position " + a);
 		if(type.equals("square"))
-			shapes[a] = new Square(x,y,height,size,rGB,filled,thickness,rotate);
+			shapes[a] = new Square(x,y,width,height,size,rGB,filled,thickness,rotate,bounce);
 		else if(type.equals("circle"))
-			shapes[a] = new Circle(x,y,height,size,rGB,filled,thickness,rotate);
+			shapes[a] = new Circle(x,y,width,height,size,rGB,filled,thickness,rotate,bounce);
 		else if(type.equals("cross"))
-			shapes[a] = new Cross(x,y,height,size,rGB,thickness,rotate);
+			shapes[a] = new Cross(x,y,width,height,size,rGB,thickness,rotate,bounce);
 		else if(type.equals("wave"))
-			shapes[a] = new Wave(x,y,height,size,rGB,thickness,rotate);
-//		else if(type.equals("star"))
-//			shapes[a] = new Star(x,y,height,size,rGB,filled,thickness,rotate);
+			shapes[a] = new Wave(x,y,width,height,size,rGB,thickness,rotate,bounce);
+		else if(type.equals("star"))
+			shapes[a] = new Star(x,y,width,height,size,rGB,filled,thickness,rotate,bounce);
 	}
 	
 	public void reset()

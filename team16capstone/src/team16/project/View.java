@@ -10,6 +10,7 @@ import javax.media.opengl.awt.GLCanvas;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import team16.project.animation.Bounce;
 import team16.project.animation.Rotate;
 
 import com.jogamp.opengl.util.FPSAnimator;
@@ -30,6 +31,7 @@ public class View extends JFrame {
     Glistener gl = new Glistener(canvas);
     MyMouseListener ml = new MyMouseListener(this,canvas);
     MyMouseListener MListener;
+    Bounce bounce = new Bounce(false,1);
     /**FOR GRAPHICS*/
     View(Model model) {
     	this.setLayout(bLayout);
@@ -87,7 +89,8 @@ public class View extends JFrame {
     
     public Rotate getRotate()
     {
-		return rotate;
+    	Rotate r = new Rotate(rotate.getd2D3D(),rotate.getState(),rotate.getDirection(),rotate.getSpeed());
+		return r;
     }
     
     public void setRotate(Rotate t)
@@ -95,6 +98,19 @@ public class View extends JFrame {
 		rotate = t;
 		fileToolbar.setRotateColor(t.getState());
     }
+    
+    public Bounce getBounce()
+    {
+    	Bounce b = new Bounce(bounce.getBounce(),bounce.getSpeed());
+		return b;
+    }
+    
+    public void setBounce(Bounce b)
+    {
+    	bounce = b;
+		fileToolbar.setBounceColor(b.getBounce());
+    }
+
     
     public Color getShapeColor(){
     	return shapeColor;

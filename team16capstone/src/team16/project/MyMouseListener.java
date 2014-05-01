@@ -6,6 +6,8 @@ import java.awt.event.MouseListener;
 
 import javax.media.opengl.awt.GLCanvas;
 
+import team16.project.animation.Bounce;
+
 public class MyMouseListener implements MouseListener{
 	View view;
 	GLCanvas canvas;
@@ -16,6 +18,7 @@ public class MyMouseListener implements MouseListener{
 	int thickness;
 	int size;
 	Color rgb = new Color(0.0f,0.0f,0.0f);
+	Bounce bounce;
 	public MyMouseListener(View view, GLCanvas canvas2) {
 		this.view = view;
 		this.canvas = canvas2;
@@ -25,6 +28,7 @@ public class MyMouseListener implements MouseListener{
 		filled = false;
 		thickness = 1;
 		size = 1;
+		bounce = new Bounce(false,1);
 		view.addMouseListener(this);
 	}
 
@@ -34,7 +38,7 @@ public class MyMouseListener implements MouseListener{
 		int y = arg0.getPoint().y;		
 		if(active){
 			active = false;
-			view.getGlistener().addShape(x,y,canvas.getSize().height,type,size,view.getShapeColor(),filled,thickness,view.getRotate());
+			view.getGlistener().addShape(x,y,canvas.getSize().width,canvas.getSize().height,type,size,view.getShapeColor(),filled,thickness,view.getRotate(),view.getBounce());
 		}
 	}
 
@@ -80,4 +84,7 @@ public class MyMouseListener implements MouseListener{
 	public void setThickness(int thickness){
 		this.thickness = thickness;
 	}
+	public void setBounce(Bounce bounce){
+		this.bounce = bounce;
+	}	
 }

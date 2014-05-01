@@ -13,6 +13,7 @@ import javax.swing.JColorChooser;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
+import team16.project.animation.Bounce;
 import team16.project.animation.Rotate;
 import team16.project.shapes.Shape;
 
@@ -23,7 +24,9 @@ public class Controller{
 	int ypoints[];
 	Boolean direction;
 	Boolean dimension;
-	int speed = 0;
+	Boolean bounce;
+	int speed = 1;
+	int bspeed = 1;
 	View view;
 	JColorChooser colorChooser=new JColorChooser();
 	JFileChooser fileChooser = new JFileChooser();
@@ -107,7 +110,7 @@ public class Controller{
                 }
             	else if (e.getActionCommand().matches("motionBounce"))
                 {
-                	
+            		doBounce();
                 }
             	else if (e.getActionCommand().matches("motionPath"))
                 {
@@ -209,6 +212,7 @@ public class Controller{
         	view.ml.setActive(true);
         	view.ml.setType(shape);
         	view.ml.setSize(tmpSize);
+        	view.ml.setBounce(view.getBounce());
         	int tmpFilled = 1;
         	if(!shape.equals("cross") && !shape.equals("wave"))
         	tmpFilled = (JOptionPane.showOptionDialog(null, "Would you like this " + shape + " to be filled?","Shape Colour Fill",JOptionPane.YES_NO_OPTION , JOptionPane.INFORMATION_MESSAGE, null, null, 1));
@@ -305,5 +309,22 @@ public class Controller{
 				fnf.printStackTrace();
 			}
 	    }
+    }
+    
+    public void doBounce(){
+		if(view.getBounce().getBounce())
+			view.setBounce(new Bounce(false,0));
+		else
+		{
+			bspeed = Integer.parseInt(JOptionPane.showInputDialog("Please enter a bounce speed from 1 to 10"));
+	    	while(bspeed > 10 || bspeed < 1)
+	    		bspeed = Integer.parseInt(JOptionPane.showInputDialog("INPUT NOT VALID! Please enter a bounce speed from 1 to 10"));
+	    	if(bspeed < 1 || bspeed > 10)
+	    		return;
+	    	else
+	    	{
+				view.setBounce(new Bounce(true,bspeed));
+	    	}
+		}
     }
 }
