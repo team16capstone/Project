@@ -47,6 +47,7 @@ public class View extends JFrame {
 //        int w = (Toolkit.getDefaultToolkit().getScreenSize().width) - (Toolkit.getDefaultToolkit().getScreenSize().width*4/100);
 //        int h = (Toolkit.getDefaultToolkit().getScreenSize().height) - (Toolkit.getDefaultToolkit().getScreenSize().height*18/100);
 //		gljpanel.setSize(w, h);
+        canvas.setBackground(Color.white);
         this.getContentPane().add(canvas, BorderLayout.CENTER);
         
         this.setTitle("Team 16 Motion Movie Maker");
@@ -56,6 +57,7 @@ public class View extends JFrame {
         canvas.addGLEventListener(gl);
         canvas.addMouseListener(ml);
         animator.start();
+        canvas.setBackground(Color.white);
     }
     
 
@@ -111,7 +113,6 @@ public class View extends JFrame {
 		fileToolbar.setBounceColor(b.getBounce());
     }
 
-    
     public Color getShapeColor(){
     	return shapeColor;
     }
@@ -120,5 +121,15 @@ public class View extends JFrame {
     	shapeColor = c;
     	fileToolbar.setColor(c);
     }
+
+
+	public void setBackColor(Color c) {
+		gl.setBack(c);
+    	fileToolbar.setBackColor(c);		
+	}
+	
+	public void setPause(boolean p) {
+    	fileToolbar.setPause(p);		
+	}
 }
 

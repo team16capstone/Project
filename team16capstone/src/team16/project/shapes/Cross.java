@@ -18,7 +18,7 @@ public class Cross extends Shape implements Serializable{
 	private int thickness;
 	private int height;
 	private int width;
-	Color rgb = new Color(0.0f,0.0f,0.0f);
+	Color rgb = Color.red;
 	private Animation crossAnimation = new Animation(new Rotate(false,false,false,0),new Bounce(false, 0));
 
 	public Cross(int x, int y,int width, int height, int size, Color rGB2, int thickness, Rotate rotate,Bounce bounce){
@@ -28,6 +28,7 @@ public class Cross extends Shape implements Serializable{
 		nsize = (((float)size)/(float)200) * (float)height;
 		xpos = x;
 		ypos = height-y;
+		if(rGB2.getRGB() != -1)
 		rgb = rGB2;
 		this.thickness = thickness;
 		if(rotate!=null)

@@ -22,13 +22,14 @@ public class Controller{
 	int object = 0;
 	int xpoints[];
 	int ypoints[];
-	Boolean direction;
-	Boolean dimension;
-	Boolean bounce;
+	boolean direction;
+	boolean dimension;
+	boolean bounce;
 	int speed = 1;
 	int bspeed = 1;
 	View view;
 	JColorChooser colorChooser=new JColorChooser();
+	JColorChooser backChooser=new JColorChooser();
 	JFileChooser fileChooser = new JFileChooser();
 
 	
@@ -116,10 +117,27 @@ public class Controller{
                 {
                 	
                 }
+            	else if (e.getActionCommand().matches("pause"))
+                {
+            		if(view.getGlistener().getPause()){
+                    	view.getGlistener().setPause(false);
+                    	view.setPause(false);
+            		}
+                	else
+                	{
+                    	view.getGlistener().setPause(true);
+                    	view.setPause(true);
+                	}
+                }
             	else if (e.getActionCommand().matches("color"))
                 {
                 	JOptionPane.showMessageDialog(null,colorChooser);
                 	view.setShapeColor(colorChooser.getColor());
+                }
+            	else if (e.getActionCommand().matches("backColor"))
+                {
+                	JOptionPane.showMessageDialog(null,backChooser);
+                	view.setBackColor(backChooser.getColor());
                 }
             	else if (e.getActionCommand().matches("undo"))
                 {

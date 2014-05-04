@@ -18,7 +18,7 @@ public class Circle extends Shape implements Serializable{
 	private int height;
 	private int thickness;
 	private int size;
-	Color rgb = new Color(0.0f,0.0f,0.0f);
+	Color rgb = Color.yellow;
 	boolean filled = true;
 	private Animation circleAnimation = new Animation(new Rotate(false,false,false,0),new Bounce(false,0));
 	public Circle(int x, int y, int width,int height, int size, Color rGB2, boolean filled, int thickness, Rotate rotate, Bounce bounce){
@@ -29,6 +29,7 @@ public class Circle extends Shape implements Serializable{
 		this.height = height;
 		this.size = size;
 		this.filled = filled;
+		if(rGB2.getRGB() != -1)
 		rgb = rGB2;
 		this.thickness = thickness;
 		if(rotate!=null)

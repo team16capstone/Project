@@ -44,12 +44,12 @@ public class EditToolbar extends JPanel{
 		circle.setActionCommand("circle");
 		bar.add(cross);
 		cross.setActionCommand("cross");
+		bar.add(wave);
+		wave.setActionCommand("wave");
 		bar.add(square);
 		square.setActionCommand("square");
 		bar.add(star);
 		star.setActionCommand("star");
-		bar.add(wave);
-		wave.setActionCommand("wave");
 		bar.addSeparator();
 		
 

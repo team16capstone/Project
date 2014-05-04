@@ -39,6 +39,8 @@ public class MyMouseListener implements MouseListener{
 		if(active){
 			active = false;
 			view.getGlistener().addShape(x,y,canvas.getSize().width,canvas.getSize().height,type,size,view.getShapeColor(),filled,thickness,view.getRotate(),view.getBounce());
+			if(view.getGlistener().getPause())
+			view.getGlistener().setOnce();
 		}
 	}
 

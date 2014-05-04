@@ -1,6 +1,9 @@
 package team16.project.animation;
 
-public class Bounce {
+import java.io.Serializable;
+
+public class Bounce implements Serializable{
+	private static final long serialVersionUID = 1L;
 	private Boolean bounce;
 	private Boolean bUp = true;
 	private Boolean bRight = true;

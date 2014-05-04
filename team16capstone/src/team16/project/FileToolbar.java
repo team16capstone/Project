@@ -15,6 +15,7 @@ import javax.swing.JToolBar;
 
 public class FileToolbar extends JPanel{
 	private static final long serialVersionUID = 1L;
+	private FlowLayout fileLayout = new FlowLayout();
 
 	/**All components of File Toolbar*/
 	private JToolBar bar = new JToolBar();
@@ -30,9 +31,10 @@ public class FileToolbar extends JPanel{
 	private JButton rotate = new JButton();
 	private JButton motionBounce = new JButton();
 	private JButton motionPath = new JButton();
-	private FlowLayout fileLayout = new FlowLayout();
-	
-	private JButton color = new JButton("Choose Colour");
+	private JButton pause = new JButton("Pause Animation");
+
+	private JButton backColor = new JButton("Background Colour");
+	private JButton color = new JButton("Shape Colour");
 	private JButton undo = new JButton("Undo");
 	private JButton redo = new JButton("Redo");
 	
@@ -78,9 +80,15 @@ public class FileToolbar extends JPanel{
 		bar.add(motionPath);
 		motionPath.setActionCommand("motionPath");
 
+		bar.addSeparator();
+		
+		bar.add(pause);
+		pause.setActionCommand("pause");
 		
 		bar.addSeparator();
 
+		bar.add(backColor);
+		backColor.setActionCommand("backColor");
 		bar.add(color);
 		color.setActionCommand("color");
 		
@@ -154,6 +162,8 @@ public class FileToolbar extends JPanel{
 		rotate.addActionListener(a);
 		motionBounce.addActionListener(a);
 		motionPath.addActionListener(a);
+		pause.addActionListener(a);
+		backColor.addActionListener(a);
 		color.addActionListener(a);
 		undo.addActionListener(a);
 		redo.addActionListener(a);
@@ -161,6 +171,10 @@ public class FileToolbar extends JPanel{
 	
 	public void setColor(Color c){
 		color.setBackground(c);
+	}
+	
+	public void setBackColor(Color c){
+		backColor.setBackground(c);
 	}
 	
 	public void setRotateColor(Boolean b){
@@ -175,5 +189,12 @@ public class FileToolbar extends JPanel{
 			motionBounce.setBackground(Color.YELLOW);
 		else
 			motionBounce.setBackground(Color.LIGHT_GRAY);
+	}
+	
+	public void setPause(Boolean p){
+		if(p)
+			pause.setBackground(Color.YELLOW);
+		else
+			pause.setBackground(Color.LIGHT_GRAY);
 	}
 }

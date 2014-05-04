@@ -17,7 +17,7 @@ public class Star extends Shape implements Serializable{
 	private int ypos;
 	private int height;
 	private int width;
-	Color rgb = new Color(0.0f,0.0f,0.0f);
+	Color rgb = Color.green;
 	boolean filled;
 	int thickness;
 	private Animation starAnimation = new Animation(new Rotate(false,false,false,0),new Bounce(false,0));
@@ -28,6 +28,7 @@ public class Star extends Shape implements Serializable{
 		nsize = (((float)size)/(float)200) * (float)height;
 		xpos = x;
 		ypos = height-y;
+		if(rGB2.getRGB() != -1)
 		rgb = rGB2;
 		this.filled = filled;
 		this.thickness = thickness;

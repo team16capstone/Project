@@ -22,6 +22,9 @@ public class Glistener implements GLEventListener{
     private Shape shapes[] = new Shape[100];
     private Shape undoShape[] = new Shape[100];
     GLCanvas canvas;
+    Color back = Color.white;
+    boolean pause = false;
+    boolean once = false;
 	public Glistener(GLCanvas canvas) {
 		this.canvas = canvas;
 		}
@@ -33,8 +36,14 @@ public class Glistener implements GLEventListener{
 	    }
 
     private void render(GLAutoDrawable drawable) {
+    	if(pause && !once)
+    		return;
+    	if(once)
+    		once = false;
+    	
         GL2 gl2 = drawable.getGL().getGL2();
-    	gl2.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
+		gl2.glClearColor(back.getRed(), back.getGreen(), back.getBlue(),1);
+    	gl2.glClear(GL.GL_DEPTH_BUFFER_BIT | GL.GL_COLOR_BUFFER_BIT);
 
 
         for(int i = 0; shapes[i] != null; i++)
@@ -75,6 +84,7 @@ public class Glistener implements GLEventListener{
 	}
 	
 	private void setup(GL2 gl2, int width, int height) {
+		gl2.glClearColor(255, 255, 255,1);
         gl2.glMatrixMode(GL2.GL_PROJECTION);
         gl2.glLoadIdentity();
         gl2.glOrthof( 0.0f, width, 0.0f, height,-height,height);
@@ -154,5 +164,21 @@ public class Glistener implements GLEventListener{
 	
 	public void loadShape(Square shape){
 		this.shapes[0] = (Square)shape;
+	}
+	
+	public void setBack(Color c){
+		back = c;
+	}
+	
+	public void setPause(boolean p){
+		pause = p;
+	}
+	
+	public boolean getPause(){
+		return pause;
+	}
+	
+	public void setOnce(){
+		once = true;
 	}
 }
