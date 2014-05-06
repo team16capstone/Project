@@ -6,7 +6,7 @@ import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.GLEventListener;
-import javax.media.opengl.awt.GLCanvas;
+import javax.media.opengl.awt.GLJPanel;
 
 import team16.project.animation.Bounce;
 import team16.project.animation.Rotate;
@@ -21,12 +21,12 @@ public class Glistener implements GLEventListener{
     float angle = 0;
     private Shape shapes[] = new Shape[100];
     private Shape undoShape[] = new Shape[100];
-    GLCanvas canvas;
+    GLJPanel canvas;
     Color back = Color.white;
     boolean pause = false;
     boolean once = false;
-	public Glistener(GLCanvas canvas) {
-		this.canvas = canvas;
+	public Glistener(GLJPanel canvas2) {
+		this.canvas = canvas2;
 		}
 
 	@Override

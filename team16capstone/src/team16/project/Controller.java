@@ -62,6 +62,14 @@ public class Controller{
                 {
                 	doSave();
                 }
+                else if (e.getActionCommand().matches("record"))
+                {
+                	doRecord("startRecord");
+                }
+                else if (e.getActionCommand().matches("stop"))
+                {
+                	doRecord("stopRecord");
+                }
             	else if (e.getActionCommand().matches("exportAVI"))
                 {
                 	
@@ -72,7 +80,7 @@ public class Controller{
                 }
             	else if (e.getActionCommand().matches("exportMP4"))
                 {
-                	
+                	doRecord("exportMP4");
                 }
             	else if (e.getActionCommand().matches("exportMOV"))
                 {
@@ -172,6 +180,14 @@ public class Controller{
                 {
                 	doLoad();
                 }
+                else if (e.getActionCommand().matches("Start Recording"))
+                {
+                	doRecord("startRecord");
+                }
+                else if (e.getActionCommand().matches("Stop Recording"))
+                {
+                	doRecord("stopRecord");
+                }
                 else if (e.getActionCommand().matches("Export To AVI"))
                 {
                 	
@@ -182,7 +198,7 @@ public class Controller{
                 }
                 else if (e.getActionCommand().matches("Export To MP4"))
                 {
-                	
+                	doRecord("exportMP4");
                 }
                 else if (e.getActionCommand().matches("Export To MOV"))
                 {
@@ -344,5 +360,18 @@ public class Controller{
 				view.setBounce(new Bounce(true,bspeed));
 	    	}
 		}
+    }
+    
+    public void doRecord(String stage){
+    	if (stage.matches("startRecord")){
+    		System.out.println("Starting Record");
+    		Record.saveImg(view.canvas);
+    	} else if (stage.matches("stopRecord")){
+    		System.out.println("Stopping Record");
+    		Record.stop = true;
+    	} else if (stage.matches("exportMP4")){
+    		System.out.println("Exporting to MP4");
+    		Record.exportMovie();
+    	}
     }
 }

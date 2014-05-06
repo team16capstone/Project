@@ -14,6 +14,8 @@ public class Menu extends JMenuBar {
 	private JMenuItem saveProject = new JMenuItem("Save Project");
 	private JMenuItem openProject = new JMenuItem("Open Project");
 	private JMenu exportMovie = new JMenu("Export");
+	private JMenuItem record = new JMenuItem("Start Recording");
+	private JMenuItem stop = new JMenuItem("Stop Recording");
 	private JMenuItem exportAVI = new JMenuItem("Export To AVI");
 	private JMenuItem exportMPEG = new JMenuItem("Export To MPEG");
 	private JMenuItem exportMP4 = new JMenuItem("Export To MP4");
@@ -36,6 +38,8 @@ public class Menu extends JMenuBar {
 	
     public Menu() {
     	/**Add File Menu*/
+    	exportMovie.add(record);
+    	exportMovie.add(stop);
     	exportMovie.add(exportAVI);
     	exportMovie.add(exportMPEG);
     	exportMovie.add(exportMP4);
@@ -65,6 +69,8 @@ public class Menu extends JMenuBar {
     	nNew.setMnemonic('N');
     	saveProject.setMnemonic('S');
     	openProject.setMnemonic('O');
+    	record.setMnemonic('R');
+    	stop.setMnemonic('D');
     	exportMovie.setMnemonic('E');
     	exportAVI.setMnemonic('A');
     	exportMPEG.setMnemonic('M');
@@ -92,6 +98,8 @@ public class Menu extends JMenuBar {
     	nNew.addActionListener(t);
     	saveProject.addActionListener(t);
     	openProject.addActionListener(t);
+    	record.addActionListener(t);
+    	stop.addActionListener(t);
     	exportAVI.addActionListener(t);
     	exportMPEG.addActionListener(t);
     	exportMP4.addActionListener(t);

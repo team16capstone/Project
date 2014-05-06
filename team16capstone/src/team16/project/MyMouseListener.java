@@ -4,13 +4,13 @@ import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import javax.media.opengl.awt.GLCanvas;
+import javax.media.opengl.awt.GLJPanel;
 
 import team16.project.animation.Bounce;
 
 public class MyMouseListener implements MouseListener{
 	View view;
-	GLCanvas canvas;
+	GLJPanel canvas;
 	String type;
 	boolean active;
 	boolean rotate;
@@ -19,7 +19,7 @@ public class MyMouseListener implements MouseListener{
 	int size;
 	Color rgb = new Color(0.0f,0.0f,0.0f);
 	Bounce bounce;
-	public MyMouseListener(View view, GLCanvas canvas2) {
+	public MyMouseListener(View view, GLJPanel canvas2) {
 		this.view = view;
 		this.canvas = canvas2;
 		type = "";

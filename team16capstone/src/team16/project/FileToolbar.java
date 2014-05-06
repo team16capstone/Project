@@ -22,6 +22,8 @@ public class FileToolbar extends JPanel{
 	private JButton nNew = new JButton();
 	private JButton open = new JButton();
 	private JButton save = new JButton();
+	private JButton record = new JButton();
+	private JButton stop = new JButton();
 	private JButton exportAVI = new JButton();
 	private JButton exportMPEG = new JButton();
 	private JButton exportMP4 = new JButton();
@@ -61,6 +63,10 @@ public class FileToolbar extends JPanel{
 		open.setActionCommand("open");
 		bar.add(save);
 		save.setActionCommand("save");
+		bar.add(record);
+		record.setActionCommand("record");
+		bar.add(stop);
+		stop.setActionCommand("stop");
 		bar.add(exportAVI);
 		exportAVI.setActionCommand("exportAVI");
 		bar.add(exportMPEG);
@@ -117,6 +123,14 @@ public class FileToolbar extends JPanel{
 		    Image tmpSave = ImageIO.read(getClass().getResource("/res/save.jpg"));
 		    ImageIcon saveIcon = new ImageIcon(tmpSave.getScaledInstance(h, h, Image.SCALE_AREA_AVERAGING));
 		    save.setIcon(saveIcon);
+		    
+		    Image tmpRecord = ImageIO.read(getClass().getResource("/res/rec.jpg"));
+		    ImageIcon recIcon = new ImageIcon(tmpRecord.getScaledInstance(h, h, Image.SCALE_AREA_AVERAGING));
+		    record.setIcon(recIcon);		   
+		    
+		    Image tmpStop = ImageIO.read(getClass().getResource("/res/stop.jpg"));
+		    ImageIcon stopIcon = new ImageIcon(tmpStop.getScaledInstance(h, h, Image.SCALE_AREA_AVERAGING));
+		    stop.setIcon(stopIcon);		
 
 		    Image tmpAVI = ImageIO.read(getClass().getResource("/res/avi.jpg"));
 		    ImageIcon aviIcon = new ImageIcon(tmpAVI.getScaledInstance(h, h, Image.SCALE_AREA_AVERAGING));
@@ -155,6 +169,8 @@ public class FileToolbar extends JPanel{
 		nNew.addActionListener(a);
 		open.addActionListener(a);
 		save.addActionListener(a);
+		record.addActionListener(a);
+		stop.addActionListener(a);
 		exportAVI.addActionListener(a);
 		exportMPEG.addActionListener(a);
 		exportMP4.addActionListener(a);
