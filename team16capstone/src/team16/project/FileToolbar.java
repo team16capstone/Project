@@ -24,10 +24,7 @@ public class FileToolbar extends JPanel{
 	private JButton save = new JButton();
 	private JButton record = new JButton();
 	private JButton stop = new JButton();
-	private JButton exportAVI = new JButton();
-	private JButton exportMPEG = new JButton();
 	private JButton exportMP4 = new JButton();
-	private JButton exportMOV = new JButton();
 	
 	/**All components of Effects*/
 	private JButton rotate = new JButton();
@@ -67,14 +64,8 @@ public class FileToolbar extends JPanel{
 		record.setActionCommand("record");
 		bar.add(stop);
 		stop.setActionCommand("stop");
-		bar.add(exportAVI);
-		exportAVI.setActionCommand("exportAVI");
-		bar.add(exportMPEG);
-		exportMPEG.setActionCommand("exportMPEG");
 		bar.add(exportMP4);
 		exportMP4.setActionCommand("exportMP4");
-		bar.add(exportMOV);
-		exportMOV.setActionCommand("exportMOV");
 		
 		bar.addSeparator();
 		
@@ -132,21 +123,9 @@ public class FileToolbar extends JPanel{
 		    ImageIcon stopIcon = new ImageIcon(tmpStop.getScaledInstance(h, h, Image.SCALE_AREA_AVERAGING));
 		    stop.setIcon(stopIcon);		
 
-		    Image tmpAVI = ImageIO.read(getClass().getResource("/res/avi.jpg"));
-		    ImageIcon aviIcon = new ImageIcon(tmpAVI.getScaledInstance(h, h, Image.SCALE_AREA_AVERAGING));
-		    exportAVI.setIcon(aviIcon);
-
-		    Image tmpMPEG = ImageIO.read(getClass().getResource("/res/mpeg.jpg"));
-		    ImageIcon mpegIcon = new ImageIcon(tmpMPEG.getScaledInstance(h, h, Image.SCALE_AREA_AVERAGING));
-		    exportMPEG.setIcon(mpegIcon);
-
 		    Image tmpMP4 = ImageIO.read(getClass().getResource("/res/mp4.jpg"));
 		    ImageIcon mp4Icon = new ImageIcon(tmpMP4.getScaledInstance(h, h, Image.SCALE_AREA_AVERAGING));
 		    exportMP4.setIcon(mp4Icon);
-
-		    Image tmpMOV = ImageIO.read(getClass().getResource("/res/mov.jpg"));
-		    ImageIcon movIcon = new ImageIcon(tmpMOV.getScaledInstance(h, h, Image.SCALE_AREA_AVERAGING));
-		    exportMOV.setIcon(movIcon);
 
 		    Image tmpRotate = ImageIO.read(getClass().getResource("/res/rotate.jpg"));
 		    ImageIcon rotateIcon = new ImageIcon(tmpRotate.getScaledInstance(h, h, Image.SCALE_AREA_AVERAGING));
@@ -171,10 +150,7 @@ public class FileToolbar extends JPanel{
 		save.addActionListener(a);
 		record.addActionListener(a);
 		stop.addActionListener(a);
-		exportAVI.addActionListener(a);
-		exportMPEG.addActionListener(a);
 		exportMP4.addActionListener(a);
-		exportMOV.addActionListener(a);
 		rotate.addActionListener(a);
 		motionBounce.addActionListener(a);
 		motionPath.addActionListener(a);
@@ -187,30 +163,71 @@ public class FileToolbar extends JPanel{
 	
 	public void setColor(Color c){
 		color.setBackground(c);
+		//Border must be removed for Cross Platform coloring
+		color.setOpaque(true);
+		color.setBorderPainted(false);
+		//End Cross Platform coloring
 	}
 	
 	public void setBackColor(Color c){
 		backColor.setBackground(c);
+		//Border must be removed for Cross Platform coloring
+		backColor.setOpaque(true);
+		backColor.setBorderPainted(false);
+		//End Cross Platform coloring
 	}
 	
 	public void setRotateColor(Boolean b){
 		if(b)
+		{
 			rotate.setBackground(Color.YELLOW);
+			//Border must be removed for Cross Platform coloring
+			rotate.setOpaque(true);
+			rotate.setBorderPainted(false);
+			//End Cross Platform coloring
+		}
 		else
+		{	
 			rotate.setBackground(Color.LIGHT_GRAY);
+			//Border must be removed for Cross Platform coloring
+			rotate.setBorderPainted(true);
+			//End Cross Platform coloring
+		}	
 	}
 	
 	public void setBounceColor(Boolean b){
 		if(b)
+		{	
 			motionBounce.setBackground(Color.YELLOW);
+			//Border must be removed for Cross Platform coloring
+			motionBounce.setOpaque(true);
+			motionBounce.setBorderPainted(false);
+			//End Cross Platform coloring
+		}	
 		else
+		{	
 			motionBounce.setBackground(Color.LIGHT_GRAY);
+			//Border must be removed for Cross Platform coloring
+			motionBounce.setBorderPainted(true);
+			//End Cross Platform coloring
+		}	
 	}
 	
 	public void setPause(Boolean p){
 		if(p)
+		{
 			pause.setBackground(Color.YELLOW);
+			//Border must be removed for Cross Platform coloring
+			pause.setOpaque(true);
+			pause.setBorderPainted(false);
+			//End Cross Platform coloring
+		}	
 		else
+		{
 			pause.setBackground(Color.LIGHT_GRAY);
+			//Border must be removed for Cross Platform coloring
+			pause.setBorderPainted(true);
+			//End Cross Platform coloring
+		}	
 	}
 }

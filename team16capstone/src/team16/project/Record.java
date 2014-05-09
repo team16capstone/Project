@@ -25,8 +25,6 @@ public class Record {
 		      component.getHeight(),
 		      BufferedImage.TYPE_INT_RGB
 		      );
-		    // call the Component's paint method, using
-		    // the Graphics object of the image.
 		    component.paint( image.getGraphics() );
 		    return image;
 		  }
@@ -41,7 +39,7 @@ public class Record {
 		BufferedImage img = getScreenShot(
             canvas );
           try {
-            // Save the Image as a PNG in a temp directory
+            // Save the Image as a PNG in a temp directory - Send later for processing
             ImageIO.write(img,"png",new File("tmp/" + i + ".png"));
           } catch(Exception e) {
             e.printStackTrace();
@@ -62,19 +60,13 @@ public class Record {
 	}
 	public static void exportMovie(){
 		j = 0;
-		IMediaWriter encoder = ToolFactory.makeWriter("test.mp4");
-		encoder.addVideoStream(0, 0, 640, 480);
+		IMediaWriter encoder = ToolFactory.makeWriter("output.mp4");
+		encoder.addVideoStream(0, 0, 1920, 1080);
 		
 		long startTime = System.nanoTime();
 		while (haveMoreVideo()){
 			BufferedImage image = getImage();
 			encoder.encodeVideo(0, image, System.nanoTime()-startTime, TimeUnit.NANOSECONDS);
-			try {
-				Thread.sleep(100);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}
 		encoder.close();
 	}
@@ -84,7 +76,7 @@ public class Record {
 		try {
 			next = ImageIO.read(new File("tmp/" + j + ".png"));
 		} catch (IOException e){
-			//TODO
+			e.printStackTrace();
 		} finally {
 			j++;
 		}

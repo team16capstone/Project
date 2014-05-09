@@ -70,21 +70,9 @@ public class Controller{
                 {
                 	doRecord("stopRecord");
                 }
-            	else if (e.getActionCommand().matches("exportAVI"))
-                {
-                	
-                }
-            	else if (e.getActionCommand().matches("exportMPEG"))
-                {
-                	
-                }
-            	else if (e.getActionCommand().matches("exportMP4"))
+             	else if (e.getActionCommand().matches("exportMP4"))
                 {
                 	doRecord("exportMP4");
-                }
-            	else if (e.getActionCommand().matches("exportMOV"))
-                {
-                	
                 }
             	else if (e.getActionCommand().matches("square"))
                 {
@@ -188,21 +176,9 @@ public class Controller{
                 {
                 	doRecord("stopRecord");
                 }
-                else if (e.getActionCommand().matches("Export To AVI"))
-                {
-                	
-                }
-                else if (e.getActionCommand().matches("Export To MPEG"))
-                {
-                	
-                }
                 else if (e.getActionCommand().matches("Export To MP4"))
                 {
                 	doRecord("exportMP4");
-                }
-                else if (e.getActionCommand().matches("Export To MOV"))
-                {
-                	
                 }
                 else if (e.getActionCommand().matches("Exit"))
                 {

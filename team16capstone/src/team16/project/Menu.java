@@ -16,10 +16,7 @@ public class Menu extends JMenuBar {
 	private JMenu exportMovie = new JMenu("Export");
 	private JMenuItem record = new JMenuItem("Start Recording");
 	private JMenuItem stop = new JMenuItem("Stop Recording");
-	private JMenuItem exportAVI = new JMenuItem("Export To AVI");
-	private JMenuItem exportMPEG = new JMenuItem("Export To MPEG");
 	private JMenuItem exportMP4 = new JMenuItem("Export To MP4");
-	private JMenuItem exportMOV = new JMenuItem("Export To MOV");
 	private JMenuItem exit = new JMenuItem("Exit");
 
 	/**Insert Menu Components*/
@@ -40,10 +37,7 @@ public class Menu extends JMenuBar {
     	/**Add File Menu*/
     	exportMovie.add(record);
     	exportMovie.add(stop);
-    	exportMovie.add(exportAVI);
-    	exportMovie.add(exportMPEG);
     	exportMovie.add(exportMP4);
-    	exportMovie.add(exportMOV);
     	file.add(nNew);
     	file.add(saveProject);
     	file.add(openProject);
@@ -72,10 +66,7 @@ public class Menu extends JMenuBar {
     	record.setMnemonic('R');
     	stop.setMnemonic('D');
     	exportMovie.setMnemonic('E');
-    	exportAVI.setMnemonic('A');
-    	exportMPEG.setMnemonic('M');
     	exportMP4.setMnemonic('P');
-    	exportMOV.setMnemonic('V');
     	exit.setMnemonic('X');
 
     	/**Add Insert Menu Shortcuts*/
@@ -100,10 +91,7 @@ public class Menu extends JMenuBar {
     	openProject.addActionListener(t);
     	record.addActionListener(t);
     	stop.addActionListener(t);
-    	exportAVI.addActionListener(t);
-    	exportMPEG.addActionListener(t);
     	exportMP4.addActionListener(t);
-    	exportMOV.addActionListener(t);
     	exit.addActionListener(t);
     	circle.addActionListener(t);
     	cross.addActionListener(t);
