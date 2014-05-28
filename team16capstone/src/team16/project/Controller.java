@@ -1,6 +1,9 @@
 package team16.project;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -25,16 +28,59 @@ public class Controller{
 	boolean direction;
 	boolean dimension;
 	boolean bounce;
+	boolean recPause = false;
 	int speed = 1;
 	int bspeed = 1;
 	View view;
 	JColorChooser colorChooser=new JColorChooser();
 	JColorChooser backChooser=new JColorChooser();
 	JFileChooser fileChooser = new JFileChooser();
-
+	Record record;
 	
 	Controller(Model model, View view) {
 		this.view = view;
+    	view.addWindowListener(new WindowListener(){
+
+			@Override
+			public void windowActivated(WindowEvent e) {
+				
+			}
+
+			@Override
+			public void windowClosed(WindowEvent e) {
+				record.setStop();
+				record.initFolder();
+				
+			}
+
+			@Override
+			public void windowClosing(WindowEvent e) {
+				record.setStop();
+				record.initFolder();
+			}
+
+			@Override
+			public void windowDeactivated(WindowEvent e) {
+				
+			}
+
+			@Override
+			public void windowDeiconified(WindowEvent e) {
+				
+			}
+
+			@Override
+			public void windowIconified(WindowEvent e) {
+				
+			}
+
+			@Override
+			public void windowOpened(WindowEvent e) {
+				
+			}
+    		
+    	});
+		record = new Record(view.canvas);
 		MenuListener ml = new MenuListener(view);
 		ToolbarListener tl = new ToolbarListener(view);
         view.addMenuListener(ml);
@@ -52,7 +98,7 @@ public class Controller{
             try {
             	if (e.getActionCommand().matches("new"))
                 {
-                	view.getGlistener().reset();
+                	view.getGlistener().reset(view);
                 }
             	else if (e.getActionCommand().matches("open"))
                 {
@@ -62,17 +108,21 @@ public class Controller{
                 {
                 	doSave();
                 }
-                else if (e.getActionCommand().matches("record"))
+            	else if (e.getActionCommand().matches("record"))
                 {
-                	doRecord("startRecord");
+            		doRecord("startRecord");
                 }
-                else if (e.getActionCommand().matches("stop"))
+            	else if (e.getActionCommand().matches("recPause"))
                 {
-                	doRecord("stopRecord");
+            		doRecord("recPause");
                 }
-             	else if (e.getActionCommand().matches("exportMP4"))
+            	else if (e.getActionCommand().matches("stopRecord"))
                 {
-                	doRecord("exportMP4");
+            		doRecord("stopRecord");
+                }
+            	else if (e.getActionCommand().matches("exportMP4"))
+                {
+            		doRecord("exportMP4");
                 }
             	else if (e.getActionCommand().matches("square"))
                 {
@@ -111,28 +161,24 @@ public class Controller{
                 }
             	else if (e.getActionCommand().matches("motionPath"))
                 {
-                	
+            		doMotionPath();
+                }
+            	else if (e.getActionCommand().matches("motionTail"))
+                {
+            		doMotionTrail();
                 }
             	else if (e.getActionCommand().matches("pause"))
                 {
-            		if(view.getGlistener().getPause()){
-                    	view.getGlistener().setPause(false);
-                    	view.setPause(false);
-            		}
-                	else
-                	{
-                    	view.getGlistener().setPause(true);
-                    	view.setPause(true);
-                	}
+            		doPause();
                 }
             	else if (e.getActionCommand().matches("color"))
                 {
-                	JOptionPane.showMessageDialog(null,colorChooser);
+                	JOptionPane.showMessageDialog(view,colorChooser);
                 	view.setShapeColor(colorChooser.getColor());
                 }
             	else if (e.getActionCommand().matches("backColor"))
                 {
-                	JOptionPane.showMessageDialog(null,backChooser);
+                	JOptionPane.showMessageDialog(view,backChooser);
                 	view.setBackColor(backChooser.getColor());
                 }
             	else if (e.getActionCommand().matches("undo"))
@@ -158,7 +204,7 @@ public class Controller{
             try {
                 if (e.getActionCommand().matches("New"))
                 {
-                	view.getGlistener().reset();
+                	view.getGlistener().reset(view);
                 }
                 else if (e.getActionCommand().matches("Save Project"))
                 {
@@ -168,9 +214,13 @@ public class Controller{
                 {
                 	doLoad();
                 }
-                else if (e.getActionCommand().matches("Start Recording"))
+                else if (e.getActionCommand().matches("Record"))
                 {
                 	doRecord("startRecord");
+                }
+                else if (e.getActionCommand().matches("Pause Recording"))
+                {
+                	doRecord("recPause");
                 }
                 else if (e.getActionCommand().matches("Stop Recording"))
                 {
@@ -203,6 +253,51 @@ public class Controller{
                 else if (e.getActionCommand().matches("Wave"))
                 {
             		doProcessing("wave");
+                }
+            	else if (e.getActionCommand().matches("Rotate"))
+                {
+            		direction = false;
+
+            		if(view.getRotate().getState())
+            			view.setRotate(new Rotate(false,false,direction,0));
+            		else
+            		{
+            			doRotate();
+            		}
+                }
+            	else if (e.getActionCommand().matches("Bounce"))
+                {
+            		doBounce();
+                }
+            	else if (e.getActionCommand().matches("Motion Path"))
+                {
+            		doMotionPath();
+                }
+            	else if (e.getActionCommand().matches("Motion Trail"))
+                {
+            		doMotionTrail();
+                }
+            	else if (e.getActionCommand().matches("Pause"))
+                {
+            		doPause();
+                }
+            	else if (e.getActionCommand().matches("Shape Color"))
+                {
+                	JOptionPane.showMessageDialog(view,colorChooser);
+                	view.setShapeColor(colorChooser.getColor());
+                }
+            	else if (e.getActionCommand().matches("Background Color"))
+                {
+                	JOptionPane.showMessageDialog(view,backChooser);
+                	view.setBackColor(backChooser.getColor());
+                }
+            	else if (e.getActionCommand().matches("Undo"))
+                {
+            		view.gl.undo();
+                }
+            	else if (e.getActionCommand().matches("Redo"))
+                {
+            		view.gl.redo();
                 }
             }
             catch (NumberFormatException nfex) {
@@ -245,7 +340,7 @@ public class Controller{
     	}
     }
     
-    public void doRotate(){
+	public void doRotate(){
     	Object[] option = {"2D",
         "3D"};
 		int n1 = JOptionPane.showOptionDialog(null,
@@ -292,6 +387,7 @@ public class Controller{
 			try {
 				ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
 				out.writeObject(view.getGlistener().getShapes());
+				out.writeObject(view.getBackColor());
 				out.close();
 			} catch (FileNotFoundException fn) {
 				fn.printStackTrace();
@@ -309,6 +405,7 @@ public class Controller{
 				ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
 				try {
 					view.getGlistener().setShapes((Shape[])in.readObject());
+					view.setBackColor((Color)in.readObject());
 					in.close();
 				} catch (ClassNotFoundException fn) {
 					fn.printStackTrace();
@@ -340,14 +437,66 @@ public class Controller{
     
     public void doRecord(String stage){
     	if (stage.matches("startRecord")){
+    		record.resetI();
+    		view.setRecord(true);
     		System.out.println("Starting Record");
-    		Record.saveImg(view.canvas);
+    		record.initFolder();
+			record.stop = false;
+    		record.saveImg(view.canvas);
+    	} else if (stage.matches("recPause")){
+    		doPause();
+    		if(!recPause){
+    			view.setRecPause(true);
+    			record.stop = true;
+    			recPause = true;
+    		}
+    		else{
+    			recPause = false;
+    			view.setRecPause(false);
+    			record.stop = false;
+        		record.saveImg(view.canvas);
+        		}
     	} else if (stage.matches("stopRecord")){
+    		view.setRecord(false);
     		System.out.println("Stopping Record");
-    		Record.stop = true;
+    		record.stop = true;
     	} else if (stage.matches("exportMP4")){
     		System.out.println("Exporting to MP4");
-    		Record.exportMovie();
+    		record.exportMovie();
     	}
     }
+    
+    private void doPause(){
+		if(view.getGlistener().getPause()){
+        	view.getGlistener().setPause(false);
+        	view.setPause(false);
+		}
+    	else
+    	{
+        	view.getGlistener().setPause(true);
+        	view.setPause(true);
+    	}
+    }
+    
+    public int getLastShapePosition(){
+		int a = 0;
+		for(int i = 0;view.getGlistener().getShapes()[i]!=null;i++)
+		{
+			a = i+1;
+		}
+		return a-1;
+    }
+    
+	private void doMotionPath() {
+		if(getLastShapePosition()>=0){
+			view.setMotion(true);
+			view.getMMListener().setRP(true);
+		}
+	}
+	
+    public void doMotionTrail() {
+    	if(getLastShapePosition()>=0)
+    		view.getGlistener().getShapes()[getLastShapePosition()].getTail().toggleTail();
+	}
+
 }

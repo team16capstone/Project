@@ -12,35 +12,53 @@ import com.xuggle.mediatool.ToolFactory;
 
 import javax.imageio.ImageIO;
 import javax.media.opengl.awt.GLJPanel;
+import javax.swing.JFileChooser;
 
 
 public class Record {
-	protected static int j = 0;
-	protected static boolean stop = false;
-	public static BufferedImage getScreenShot(
-		    Component component) {
+	protected int j = 0;
+	protected boolean stop = false;
+	BufferedImage image, img, next;
+	Component component;
+	File test;
+	int i = 0;
 
-		    BufferedImage image = new BufferedImage(
-		      component.getWidth(),
-		      component.getHeight(),
-		      BufferedImage.TYPE_INT_RGB
-		      );
+	public Record(Component component){
+		this.component = component;
+
+	}
+	public BufferedImage getScreenShot() {
+		if(component.getWidth() > 0)
+	      image = new BufferedImage(
+	      component.getWidth(),
+	      component.getHeight(),
+	      BufferedImage.TYPE_INT_RGB
+	      );
+		else
+		      image = new BufferedImage(
+		    	      1,
+		    	      1,
+		    	      BufferedImage.TYPE_INT_RGB
+		    	      );
 		    component.paint( image.getGraphics() );
 		    return image;
 		  }
-	public static void saveImg(final GLJPanel canvas) {
-		initFolder();
+	public void saveImg(final GLJPanel canvas) {
 		stop = false;
 		Runnable task = new Runnable(){
 			@Override
 			public void run(){
-	int i = 0;
 	while(!stop){
-		BufferedImage img = getScreenShot(
-            canvas );
+//		try {
+//			Thread.sleep(15);
+//		} catch (InterruptedException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
+		img = getScreenShot();
           try {
             // Save the Image as a PNG in a temp directory - Send later for processing
-            ImageIO.write(img,"png",new File("tmp/" + i + ".png"));
+            ImageIO.write(img,"jpeg",new File("tmp/" + i + ".jpeg"));
           } catch(Exception e) {
             e.printStackTrace();
           }
@@ -49,7 +67,7 @@ public class Record {
 	}
 	}; new Thread(task, "Service Thread").start();
 	}
-	public static void initFolder() {
+	public void initFolder() {
 		File folder = new File("tmp/");
 	    File[] files = folder.listFiles();
 	    if(files!=null) {
@@ -58,23 +76,30 @@ public class Record {
 	        }
 	    }
 	}
-	public static void exportMovie(){
+	public void exportMovie(){
+		if(!haveMoreVideo()){
+			return;
+		}
+		JFileChooser f = new JFileChooser();
+		f.showSaveDialog(component);
+		if(f.getSelectedFile()==null)
+			return;
 		j = 0;
-		IMediaWriter encoder = ToolFactory.makeWriter("output.mp4");
-		encoder.addVideoStream(0, 0, 1920, 1080);
+		IMediaWriter encoder = ToolFactory.makeWriter(f.getSelectedFile().getPath()+".mp4");
+		encoder.addVideoStream(0, 0, component.getWidth(), component.getHeight());
 		
-		long startTime = System.nanoTime();
+//		long startTime = System.nanoTime();
 		while (haveMoreVideo()){
-			BufferedImage image = getImage();
-			encoder.encodeVideo(0, image, System.nanoTime()-startTime, TimeUnit.NANOSECONDS);
+			image = getImage();
+			encoder.encodeVideo(0, image, System.currentTimeMillis()+j*20, TimeUnit.MILLISECONDS);
 		}
 		encoder.close();
 	}
 
-	private static BufferedImage getImage() {
-		BufferedImage next = null;
+	private BufferedImage getImage() {
+		next = null;
 		try {
-			next = ImageIO.read(new File("tmp/" + j + ".png"));
+			next = ImageIO.read(new File("tmp/" + j + ".jpeg"));
 		} catch (IOException e){
 			e.printStackTrace();
 		} finally {
@@ -83,13 +108,21 @@ public class Record {
 		return next;
 	}
 
-	private static boolean haveMoreVideo() {
-		File test = new File("tmp/" + j + ".png");
+	private boolean haveMoreVideo() {
+		test = new File("tmp/" + j + ".jpeg");
 		if (test.exists()){
 			return true;
 		} else {
 			return false;
 		}
+	}
+	
+	public void setStop(){
+		stop = true;
+	}
+	
+	public void resetI(){
+		i = 0;
 	}
   
 

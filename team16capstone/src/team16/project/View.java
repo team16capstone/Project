@@ -3,7 +3,6 @@ package team16.project;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionListener;
-
 import javax.media.opengl.GLCapabilities;
 import javax.media.opengl.GLProfile;
 import javax.media.opengl.awt.GLJPanel;
@@ -30,14 +29,14 @@ public class View extends JFrame {
     GLJPanel canvas = new GLJPanel( glcapabilities );
     Glistener gl = new Glistener(canvas);
     MyMouseListener ml = new MyMouseListener(this,canvas);
-    MyMouseListener MListener;
+    MyMouseMotionListener mml = new MyMouseMotionListener(this,canvas);
     Bounce bounce = new Bounce(false,1);
     /**FOR GRAPHICS*/
     View(Model model) {
     	this.setLayout(bLayout);
 
 
-        FPSAnimator animator = new FPSAnimator(canvas,120, true);
+        FPSAnimator animator = new FPSAnimator(canvas,60, true);
         
         //JButton button = new JButton("button");
         setJMenuBar(menu);
@@ -56,6 +55,7 @@ public class View extends JFrame {
         
         canvas.addGLEventListener(gl);
         canvas.addMouseListener(ml);
+        canvas.addMouseMotionListener(mml);
         animator.start();
         canvas.setBackground(Color.white);
     }
@@ -123,13 +123,32 @@ public class View extends JFrame {
     }
 
 
-	public void setBackColor(Color c) {
-		gl.setBack(c);
-    	fileToolbar.setBackColor(c);		
+	public void setBackColor(Color color) {
+		gl.setBack(color);
+    	fileToolbar.setBackColor(color);		
+	}
+	
+	public Color getBackColor() {
+    	return fileToolbar.getBackColor();		
 	}
 	
 	public void setPause(boolean p) {
     	fileToolbar.setPause(p);		
+	}
+	
+	public void setRecPause(boolean p) {
+    	fileToolbar.setRecPauseColor(p);		
+	}
+	public void setRecord(boolean p) {
+    	fileToolbar.setRecord(p);		
+	}
+	
+	public void setMotion(boolean p){
+		fileToolbar.setMotionPathColor(p);
+	}
+	
+	public MyMouseMotionListener getMMListener(){
+		return mml;
 	}
 }
 

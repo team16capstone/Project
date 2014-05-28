@@ -9,6 +9,5 @@ public class ChooseColour extends JOptionPane{
 	JColorChooser chooser = new JColorChooser();
 	
 	public ChooseColour(){
-		System.out.println("RETURN IS: " + JOptionPane.showOptionDialog(this, chooser, "Colour Chooser", optionType, messageType, icon, options, chooser));
 	}
 }

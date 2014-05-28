@@ -1,13 +1,16 @@
 package team16.project.shapes;
 
 import java.awt.Color;
+import java.awt.Point;
 import java.io.Serializable;
 
 import javax.media.opengl.GL2;
 
 import team16.project.animation.Animation;
 import team16.project.animation.Bounce;
+import team16.project.animation.MotionPath;
 import team16.project.animation.Rotate;
+import team16.project.animation.Tail;
 
 
 public class Wave extends Shape implements Serializable{
@@ -19,7 +22,7 @@ public class Wave extends Shape implements Serializable{
 	private int width;
 	private int thickness;
 	Color rgb = Color.blue;
-	private Animation waveAnimation = new Animation(new Rotate(false,false,false,0),new Bounce(false,0));
+	private Animation waveAnimation = new Animation(new Rotate(false,false,false,0),new Bounce(false,0),new MotionPath(false, new Point[1000]), new Tail(false,this));
 	
 	public Wave(int x, int y,int width, int height, int size, Color rGB2, int thickness, Rotate rotate, Bounce bounce){
 		super("wave");
@@ -90,7 +93,7 @@ public class Wave extends Shape implements Serializable{
 	}
 	public float getSize()
 	{
-		return nsize;
+		return (float)nsize*(float)5/(float)height*(float)200/(float)2.5;
 	}
 	public float getWidth()
 	{
@@ -104,5 +107,54 @@ public class Wave extends Shape implements Serializable{
 		xpos = x;
 		ypos = y;
 	}
+	public Animation getAnimation(){
+		return waveAnimation;
+	}
 	
+	@Override
+	public void setRGB(Color c) {
+		rgb = c;
+	}
+	
+	@Override
+	public Color getRGB() {
+		return rgb;
+	}
+
+	@Override
+	public void setTrail(Shape s) {
+		waveAnimation.setTail(new Tail(true,this));
+	}
+
+	@Override
+	public Tail getTail() {
+		return waveAnimation.getTail();
+	}
+	
+	@Override
+	public void removeAnim() {
+		if(waveAnimation!=null)
+		waveAnimation.turnOff();
+	}
+	
+	@Override
+	public Boolean getFilled() {
+		return false;
+	}
+
+	@Override
+	public int getThickness() {
+		return thickness;
+	}
+	
+	@Override
+	public void drawWithTail(GL2 gl2, float angle,int x, int y, int index, Color background) {
+		
+	}
+	
+	@SuppressWarnings("unused")
+	private Color fade(Color c, int i){
+		c = new Color((float)c.getRed()/(float)255,(float)c.getGreen()/(float)255,(float)c.getBlue()/(float)255,(float)i/(float)10);
+		return c;
+	}
 }

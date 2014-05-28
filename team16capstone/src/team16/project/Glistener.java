@@ -25,14 +25,19 @@ public class Glistener implements GLEventListener{
     Color back = Color.white;
     boolean pause = false;
     boolean once = false;
-	public Glistener(GLJPanel canvas2) {
-		this.canvas = canvas2;
+    int i= 0,tailCounter = 0;
+	public Glistener(GLJPanel canvas) {
+		this.canvas = canvas;
+
 		}
 
 	@Override
 	public void display(GLAutoDrawable glautodrawable) {
 //	    this.update();
 	    this.render(glautodrawable);
+	    
+	    
+
 	    }
 
     private void render(GLAutoDrawable drawable) {
@@ -42,7 +47,7 @@ public class Glistener implements GLEventListener{
     		once = false;
     	
         GL2 gl2 = drawable.getGL().getGL2();
-		gl2.glClearColor(back.getRed(), back.getGreen(), back.getBlue(),1);
+		gl2.glClearColor((float)back.getRed()/(float)255, (float)back.getGreen()/(float)255, (float)back.getBlue()/(float)255,(float)1);
     	gl2.glClear(GL.GL_DEPTH_BUFFER_BIT | GL.GL_COLOR_BUFFER_BIT);
 
 
@@ -59,8 +64,31 @@ public class Glistener implements GLEventListener{
             	((Star)shapes[i]).drawStar(gl2, angle);
             else if(shapes[i].getType().equals("wave"))
             	((Wave)shapes[i]).drawWave(gl2, angle);
+            System.out.println(tailCounter);
+
+            	if(shapes[i].getTail().getState()){
+                    if(tailCounter == 3){
+                    	shapes[i].getTail().update(shapes[i].getX(), shapes[i].getY());
+                    }
+            		for(int j = 9; j>=0;j--){
+                        if(shapes[i].getType().equals("square"))
+                        	((Square)shapes[i]).drawWithTail(gl2, angle, (int)shapes[i].getTail().getTail()[j].getX(), (int)shapes[i].getTail().getTail()[j].getY(), j, back);
+//                        else if(shapes[i].getTail().getTail()[j].getType().equals("circle"))
+//                        	((Circle)shapes[i].getTail().getTail()[j]).drawCircle(gl2, angle);
+//                        else if(shapes[i].getTail().getTail()[j].getType().equals("cross"))
+//                        	((Cross)shapes[i].getTail().getTail()[j]).drawCross(gl2, angle);
+//                        else if(shapes[i].getTail().getTail()[j].getType().equals("star"))
+//                        	((Star)shapes[i].getTail().getTail()[j]).drawStar(gl2, angle);
+//                        else if(shapes[i].getTail().getTail()[j].getType().equals("wave"))
+//                        	((Wave)shapes[i].getTail().getTail()[j]).drawWave(gl2, angle);
+            		}
+            	}
         }
         	angle += 0.1;
+        	if(tailCounter<3)
+        		tailCounter++;
+        	else
+        		tailCounter = 0;
     }
       
     @SuppressWarnings("unused")
@@ -90,6 +118,7 @@ public class Glistener implements GLEventListener{
         gl2.glOrthof( 0.0f, width, 0.0f, height,-height,height);
         gl2.glMatrixMode(GL2.GL_MODELVIEW);
         gl2.glLoadIdentity();
+
 	}
 	
 	public void addShape(int x, int y,int width, int height, String type, int size, Color rGB, boolean filled, int thickness, Rotate rotate, Bounce bounce){
@@ -112,9 +141,13 @@ public class Glistener implements GLEventListener{
 			shapes[a] = new Star(x,y,width,height,size,rGB,filled,thickness,rotate,bounce);
 	}
 	
-	public void reset()
+	public void reset(View view)
 	{
 		shapes = new Shape[100];
+		undoShape = new Shape[100];
+//		back = Color.white;
+		view.setShapeColor(Color.white);
+		view.setBackColor(Color.white);
 	}
 	
 	public void undo(){

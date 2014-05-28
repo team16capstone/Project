@@ -7,6 +7,13 @@ import java.awt.event.MouseListener;
 import javax.media.opengl.awt.GLJPanel;
 
 import team16.project.animation.Bounce;
+import team16.project.animation.MotionPath;
+import team16.project.shapes.Circle;
+import team16.project.shapes.Cross;
+import team16.project.shapes.Shape;
+import team16.project.shapes.Square;
+import team16.project.shapes.Star;
+import team16.project.shapes.Wave;
 
 public class MyMouseListener implements MouseListener{
 	View view;
@@ -19,6 +26,8 @@ public class MyMouseListener implements MouseListener{
 	int size;
 	Color rgb = new Color(0.0f,0.0f,0.0f);
 	Bounce bounce;
+	Boolean rP = false;
+
 	public MyMouseListener(View view, GLJPanel canvas2) {
 		this.view = view;
 		this.canvas = canvas2;
@@ -29,7 +38,7 @@ public class MyMouseListener implements MouseListener{
 		thickness = 1;
 		size = 1;
 		bounce = new Bounce(false,1);
-		view.addMouseListener(this);
+//		view.addMouseListener(this);
 	}
 
 	@Override
@@ -58,14 +67,46 @@ public class MyMouseListener implements MouseListener{
 
 	@Override
 	public void mousePressed(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
+		if(rP && view.getMMListener().getRP()){
+			view.getMMListener().setRP(false);
+			for(int az = 0; az < 1000; az++){
+				if(view.getMMListener().getMP().getPath()[az]!=null){
+				}
+			}
+			if(rP && !view.getMMListener().getRP() && view.getGlistener().getShapes()[0]!=null){
+				view.setMotion(false);
+				rP = false;
+				switch (getShape()){
+				case "circle":
+					((Circle)getLastShape()).getAnimation().setMotionPath(new MotionPath(true, view.getMMListener().getMP().getPath()));
+					((Circle)getLastShape()).getAnimation().getMotionPath().setMax();
+				break;
+				case "square":
+					((Square)getLastShape()).getAnimation().setMotionPath(new MotionPath(true, view.getMMListener().getMP().getPath()));
+					((Square)getLastShape()).getAnimation().getMotionPath().setMax();
+				break;
+				case "star":
+					((Star)getLastShape()).getAnimation().setMotionPath(new MotionPath(true, view.getMMListener().getMP().getPath()));
+					((Star)getLastShape()).getAnimation().getMotionPath().setMax();
+				break;
+				case "cross":
+					((Cross)getLastShape()).getAnimation().setMotionPath(new MotionPath(true, view.getMMListener().getMP().getPath()));
+					((Cross)getLastShape()).getAnimation().getMotionPath().setMax();
+				break;
+				case "wave":
+					((Wave)getLastShape()).getAnimation().setMotionPath(new MotionPath(true, view.getMMListener().getMP().getPath()));
+					((Wave)getLastShape()).getAnimation().getMotionPath().setMax();
+				break;
+				}
+				rP = false;
+			}
+		}
+
 	}
 	
 	public void setActive(boolean active){
@@ -89,4 +130,39 @@ public class MyMouseListener implements MouseListener{
 	public void setBounce(Bounce bounce){
 		this.bounce = bounce;
 	}	
+	
+	
+	public String getShape(){
+		if(view.getGlistener().getShapes()[getLastShapePosition()].getType().equals("cross"))
+			return "cross";
+		else if(view.getGlistener().getShapes()[getLastShapePosition()].getType().equals("circle"))
+			return "circle";
+		else if(view.getGlistener().getShapes()[getLastShapePosition()].getType().equals("square"))
+			return "square";
+		else if(view.getGlistener().getShapes()[getLastShapePosition()].getType().equals("star"))
+			return "star";
+		else
+			return "wave";
+		}
+	
+	public Shape getLastShape(){
+		return view.getGlistener().getShapes()[getLastShapePosition()];
+	}
+	
+    public int getLastShapePosition(){
+		int a = 0;
+		for(int i = 0;view.getGlistener().getShapes()[i]!=null;i++)
+		{
+			a = i+1;
+		}
+		return a-1;
+    }
+    
+    public void setrP(Boolean b){
+    	rP = b;
+    }
+    
+    public Boolean getrP(){
+    	return rP;
+    }
 }

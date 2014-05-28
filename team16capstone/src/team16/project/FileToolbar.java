@@ -23,13 +23,15 @@ public class FileToolbar extends JPanel{
 	private JButton open = new JButton();
 	private JButton save = new JButton();
 	private JButton record = new JButton();
-	private JButton stop = new JButton();
+	private JButton recPause = new JButton();
+	private JButton stopRecord = new JButton();
 	private JButton exportMP4 = new JButton();
 	
 	/**All components of Effects*/
 	private JButton rotate = new JButton();
 	private JButton motionBounce = new JButton();
 	private JButton motionPath = new JButton();
+	private JButton motionTail = new JButton();
 	private JButton pause = new JButton("Pause Animation");
 
 	private JButton backColor = new JButton("Background Colour");
@@ -62,8 +64,10 @@ public class FileToolbar extends JPanel{
 		save.setActionCommand("save");
 		bar.add(record);
 		record.setActionCommand("record");
-		bar.add(stop);
-		stop.setActionCommand("stop");
+		bar.add(recPause);
+		recPause.setActionCommand("recPause");
+		bar.add(stopRecord);
+		stopRecord.setActionCommand("stopRecord");
 		bar.add(exportMP4);
 		exportMP4.setActionCommand("exportMP4");
 		
@@ -76,6 +80,8 @@ public class FileToolbar extends JPanel{
 		motionBounce.setActionCommand("motionBounce");
 		bar.add(motionPath);
 		motionPath.setActionCommand("motionPath");
+		bar.add(motionTail);
+		motionTail.setActionCommand("motionTail");
 
 		bar.addSeparator();
 		
@@ -114,14 +120,18 @@ public class FileToolbar extends JPanel{
 		    Image tmpSave = ImageIO.read(getClass().getResource("/res/save.jpg"));
 		    ImageIcon saveIcon = new ImageIcon(tmpSave.getScaledInstance(h, h, Image.SCALE_AREA_AVERAGING));
 		    save.setIcon(saveIcon);
-		    
+
 		    Image tmpRecord = ImageIO.read(getClass().getResource("/res/rec.jpg"));
 		    ImageIcon recIcon = new ImageIcon(tmpRecord.getScaledInstance(h, h, Image.SCALE_AREA_AVERAGING));
-		    record.setIcon(recIcon);		   
+		    record.setIcon(recIcon);
 		    
-		    Image tmpStop = ImageIO.read(getClass().getResource("/res/stop.jpg"));
-		    ImageIcon stopIcon = new ImageIcon(tmpStop.getScaledInstance(h, h, Image.SCALE_AREA_AVERAGING));
-		    stop.setIcon(stopIcon);		
+		    Image tmpRecPause = ImageIO.read(getClass().getResource("/res/recPause.jpg"));
+		    ImageIcon recPauseIcon = new ImageIcon(tmpRecPause.getScaledInstance(h, h, Image.SCALE_AREA_AVERAGING));
+		    recPause.setIcon(recPauseIcon);
+
+		    Image tmpStopRec = ImageIO.read(getClass().getResource("/res/stop.jpg"));
+		    ImageIcon stopRecIcon = new ImageIcon(tmpStopRec.getScaledInstance(h, h, Image.SCALE_AREA_AVERAGING));
+		    stopRecord.setIcon(stopRecIcon);
 
 		    Image tmpMP4 = ImageIO.read(getClass().getResource("/res/mp4.jpg"));
 		    ImageIcon mp4Icon = new ImageIcon(tmpMP4.getScaledInstance(h, h, Image.SCALE_AREA_AVERAGING));
@@ -139,6 +149,10 @@ public class FileToolbar extends JPanel{
 		    ImageIcon pathIcon = new ImageIcon(tmpPath.getScaledInstance(h, h, Image.SCALE_AREA_AVERAGING));
 		    motionPath.setIcon(pathIcon);
 		    
+		    Image tmpTail = ImageIO.read(getClass().getResource("/res/tail.jpg"));
+		    ImageIcon tailIcon = new ImageIcon(tmpTail.getScaledInstance(h, h, Image.SCALE_AREA_AVERAGING));
+		    motionTail.setIcon(tailIcon);
+		    
 		  } catch (IOException ex) {
 		  }
 		
@@ -149,11 +163,13 @@ public class FileToolbar extends JPanel{
 		open.addActionListener(a);
 		save.addActionListener(a);
 		record.addActionListener(a);
-		stop.addActionListener(a);
+		recPause.addActionListener(a);
+		stopRecord.addActionListener(a);
 		exportMP4.addActionListener(a);
 		rotate.addActionListener(a);
 		motionBounce.addActionListener(a);
 		motionPath.addActionListener(a);
+		motionTail.addActionListener(a);
 		pause.addActionListener(a);
 		backColor.addActionListener(a);
 		color.addActionListener(a);
@@ -163,71 +179,84 @@ public class FileToolbar extends JPanel{
 	
 	public void setColor(Color c){
 		color.setBackground(c);
-		//Border must be removed for Cross Platform coloring
 		color.setOpaque(true);
 		color.setBorderPainted(false);
-		//End Cross Platform coloring
 	}
 	
 	public void setBackColor(Color c){
 		backColor.setBackground(c);
-		//Border must be removed for Cross Platform coloring
 		backColor.setOpaque(true);
 		backColor.setBorderPainted(false);
-		//End Cross Platform coloring
+	}
+	public Color getBackColor(){
+		return backColor.getBackground();
 	}
 	
 	public void setRotateColor(Boolean b){
 		if(b)
+			turnOn(rotate);
+		else
+			turnOff(rotate);
+	}
+	
+	public void setRecordColor(Boolean b){
+		if(b)
+			turnOn(rotate);
+		else
+			turnOff(rotate);
+	}
+	
+	public void setRecPauseColor(Boolean b){
+		if(b)
 		{
-			rotate.setBackground(Color.YELLOW);
-			//Border must be removed for Cross Platform coloring
-			rotate.setOpaque(true);
-			rotate.setBorderPainted(false);
-			//End Cross Platform coloring
+			turnOn(recPause);
+			turnOff(record);			
 		}
 		else
-		{	
-			rotate.setBackground(Color.LIGHT_GRAY);
-			//Border must be removed for Cross Platform coloring
-			rotate.setBorderPainted(true);
-			//End Cross Platform coloring
-		}	
+		{
+			turnOff(recPause);
+			turnOn(record);			
+		}
+
 	}
 	
 	public void setBounceColor(Boolean b){
 		if(b)
-		{	
-			motionBounce.setBackground(Color.YELLOW);
-			//Border must be removed for Cross Platform coloring
-			motionBounce.setOpaque(true);
-			motionBounce.setBorderPainted(false);
-			//End Cross Platform coloring
-		}	
+			turnOn(motionBounce);
 		else
-		{	
-			motionBounce.setBackground(Color.LIGHT_GRAY);
-			//Border must be removed for Cross Platform coloring
-			motionBounce.setBorderPainted(true);
-			//End Cross Platform coloring
-		}	
+			turnOff(motionBounce);
+	}
+	
+	public void setMotionPathColor(Boolean b){
+		if(b)
+			turnOn(motionPath);
+		else
+			turnOff(motionPath);
 	}
 	
 	public void setPause(Boolean p){
 		if(p)
-		{
-			pause.setBackground(Color.YELLOW);
-			//Border must be removed for Cross Platform coloring
-			pause.setOpaque(true);
-			pause.setBorderPainted(false);
-			//End Cross Platform coloring
-		}	
+			turnOn(pause);
 		else
-		{
-			pause.setBackground(Color.LIGHT_GRAY);
-			//Border must be removed for Cross Platform coloring
-			pause.setBorderPainted(true);
-			//End Cross Platform coloring
-		}	
+			turnOff(pause);
+	}
+	
+	public void setRecord(Boolean p){
+		if(p)
+			turnOn(record);
+		else
+			turnOff(record);
+	}
+	
+	public void turnOn(JButton b){
+		b.setBackground(Color.YELLOW);
+		b.setOpaque(true);
+		b.setBorderPainted(false);
+	}
+	
+	public void turnOff(JButton b){
+		b.setBackground(Color.LIGHT_GRAY);
+		b.setOpaque(true);
+		b.setBorderPainted(true);
 	}
 }

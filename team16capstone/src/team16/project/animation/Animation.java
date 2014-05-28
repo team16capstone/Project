@@ -14,13 +14,15 @@ import team16.project.shapes.Wave;
 public class Animation implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private Bounce bounce;
-
-//	private Boolean path;
+	private MotionPath path;
 	private Rotate rotate;
+	private Tail tail;
 	
-	public Animation(Rotate rotate,Bounce bounce){
+	public Animation(Rotate rotate,Bounce bounce, MotionPath path, Tail tail){
 		this.rotate = rotate;
 		this.bounce = bounce;
+		this.path = path;
+		this.tail = tail;
 	}
 	
 	public void setRotateData(Rotate rotate){
@@ -29,12 +31,27 @@ public class Animation implements Serializable{
 	public void setBounce(Bounce bounce){
 		this.bounce = bounce;
 	}
-
-//	public void setPath(Boolean bounce)
-//	{
-//		this.bounce = bounce;
-//	}
+	public void setMotionPath(MotionPath path){
+		this.path = path;
+	}
+	public MotionPath getMotionPath(){
+		return path;
+	}
 	
+	public void setTail(Tail tail){
+		this.tail = tail;
+	}
+	
+	public Tail getTail(){
+		return tail;
+	}
+	
+	public void turnOff(){
+		bounce.setActive(false);
+		rotate.setState(false);
+		path.setState(false);
+		tail.setActive(false);
+	}
 	public void doAnimations(GL2 gl2, Shape shape, float angle){
 		/**BOUNCE ANIMATION BEGINS HERE*/
 		if(bounce.getBounce())
@@ -224,7 +241,29 @@ public class Animation implements Serializable{
 		
 		
 		/**MOTION PATH ANIMATION BEGINS HERE*/
-		
+		if(path.getState() && !bounce.getBounce())
+		{
+			if(shape.getType().equals("circle")){
+				((Circle)(shape)).setXY((int)(path.getPath()[path.getInc()].getX()), (int)(path.getPath()[path.getInc()].getY()));
+				path.increment();
+			}
+			else if (shape.getType().equals("cross")){
+				((Cross)(shape)).setXY((int)(path.getPath()[path.getInc()].getX()), (int)(path.getPath()[path.getInc()].getY()));
+				path.increment();
+			}
+			else if (shape.getType().equals("square")){
+				((Square)(shape)).setXY((int)(path.getPath()[path.getInc()].getX()), (int)(path.getPath()[path.getInc()].getY()));
+				path.increment();
+			}
+			else if (shape.getType().equals("star")){
+				((Star)(shape)).setXY((int)(path.getPath()[path.getInc()].getX()), (int)(path.getPath()[path.getInc()].getY()));
+				path.increment();
+			}
+			else if (shape.getType().equals("wave")){
+				((Wave)(shape)).setXY((int)(path.getPath()[path.getInc()].getX()), (int)(path.getPath()[path.getInc()].getY()));
+				path.increment();
+			}
+		}
 		
 		
 		

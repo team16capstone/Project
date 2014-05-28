@@ -3,7 +3,7 @@ package team16.project.animation;
 import java.io.Serializable;
 
 public class Rotate implements Serializable{
-	private static final long serialVersionUID = 7387805445836104683L;
+	private static final long serialVersionUID = 1L;
 	private Boolean d2D3D = false;
 	private Boolean state = false;
 	private Boolean direction = false;

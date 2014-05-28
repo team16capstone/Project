@@ -36,5 +36,9 @@ public class Bounce implements Serializable{
 	public void setbRight(Boolean r){
 		this.bRight = r;
 	}
+	
+	public void setActive(Boolean b){
+		bounce = b;
+	}
 
 }

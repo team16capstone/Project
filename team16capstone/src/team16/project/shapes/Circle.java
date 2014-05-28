@@ -1,13 +1,16 @@
 package team16.project.shapes;
 
 import java.awt.Color;
+import java.awt.Point;
 import java.io.Serializable;
 
 import javax.media.opengl.GL2;
 
 import team16.project.animation.Animation;
 import team16.project.animation.Bounce;
+import team16.project.animation.MotionPath;
 import team16.project.animation.Rotate;
+import team16.project.animation.Tail;
 
 
 public class Circle extends Shape implements Serializable{
@@ -20,7 +23,7 @@ public class Circle extends Shape implements Serializable{
 	private int size;
 	Color rgb = Color.yellow;
 	boolean filled = true;
-	private Animation circleAnimation = new Animation(new Rotate(false,false,false,0),new Bounce(false,0));
+	private Animation circleAnimation = new Animation(new Rotate(false,false,false,0),new Bounce(false,0), new MotionPath(false, new Point[1000]), new Tail(false,this));
 	public Circle(int x, int y, int width,int height, int size, Color rGB2, boolean filled, int thickness, Rotate rotate, Bounce bounce){
 		super("circle");
 		this.x = x;
@@ -82,7 +85,7 @@ public class Circle extends Shape implements Serializable{
 		}
 		public float getSize()
 		{
-			return (float)size;
+			return (float)size/210*height;
 		}
 		public float getWidth()
 		{
@@ -95,5 +98,55 @@ public class Circle extends Shape implements Serializable{
 		public void setXY(int x, int y){
 			this.x = x;
 			this.y = y;
+		}
+		public Animation getAnimation(){
+			return circleAnimation;
+		}
+
+		@Override
+		public void setRGB(Color c) {
+			rgb = c;
+		}
+
+		@Override
+		public Color getRGB() {
+			return rgb;
+		}
+
+		@Override
+		public void setTrail(Shape s) {
+			circleAnimation.setTail(new Tail(true,this));
+		}
+
+		@Override
+		public Tail getTail() {
+			return circleAnimation.getTail();
+		}
+
+		@Override
+		public void removeAnim() {
+			if(circleAnimation!=null)
+			circleAnimation.turnOff();
+		}
+
+		@Override
+		public Boolean getFilled() {
+			return filled;
+		}
+
+		@Override
+		public int getThickness() {
+			return thickness;
+		}
+
+		@Override
+		public void drawWithTail(GL2 gl2, float angle,int x, int y, int index, Color background) {
+			
+		}
+
+		@SuppressWarnings({ "unused" })
+		private Color fade(Color c, int i){
+			c = new Color((float)c.getRed()/(float)255,(float)c.getGreen()/(float)255,(float)c.getBlue()/(float)255,(float)i/(float)10);
+			return c;
 		}
 }
